@@ -11,6 +11,7 @@ format:
 #| warning: false
 #| message: false
 knitr::knit_engines$set(extendrsrc = rextendr::eng_extendrsrc)
+JuliaCall::julia_setup(JULIA_HOME = "D:/Julia/Julia-1.10.2/bin")
 ```
 
 ```{r}
