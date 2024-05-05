@@ -5,5 +5,5 @@
 
 /.quarto/
 *.dll
-publish-for-loop-archive.sh
+*.sh
 Diary
