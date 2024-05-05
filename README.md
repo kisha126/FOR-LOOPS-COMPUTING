@@ -8,6 +8,6 @@ leverage their strength in computations into R.
 
 Links (Still under construction):
 
-Quarto Pub:
+Quarto Pub: <https://whyher12.quarto.pub/for-loops-archive/>
 
 GitHub Pages: <https://kishinsagume12.github.io/FOR-LOOPS-COMPUTING/>
