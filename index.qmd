@@ -37,7 +37,7 @@ Here are the list of languages will be used in this activity:
     -   with the Rcpp namespace, you can seamlessly integrate C++ features like *NumericVector* and *DataFrame*, mirroring R's class system.
 3.  Julia
     -   Julia shares similarities with C in that it's a compiled language, effectively addressing the "2 language problem" by eliminating the need for separate languages like C, C++, or FORTRAN APIs.
-    -   Julia is able to be both fast and easy to read.
+    -   Julia is a JIT compiled and it is able to be both fast and easy to read.
 4.  Rust
     -   Rust, akin to C/C++, prioritizes memory safety. 
     -   Preparing to compile Rust code in R involves installing necessary Build Tools and rustc cargo via the terminal.
