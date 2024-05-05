@@ -37,7 +37,7 @@ Here are the list of languages will be used in this activity:
     -   with the Rcpp namespace, you can seamlessly integrate C++ features like *NumericVector* and *DataFrame*, mirroring R's class system.
 3.  Julia
     -   Julia shares similarities with C in that it's a compiled language, effectively addressing the "2 language problem" by eliminating the need for separate languages like C, C++, or FORTRAN APIs.
-    -   Julia is able to be both fast and also easy to read.
+    -   Julia is able to be both fast and easy to read.
 4.  Rust
     -   Rust, akin to C/C++, prioritizes memory safety. 
     -   Preparing to compile Rust code in R involves installing necessary Build Tools and rustc cargo via the terminal.
@@ -69,8 +69,8 @@ void pi_approx_c(int *n, double *result) {
   double pi_4 = 0;
   double sign = 1;
   
-  for (int i = 1; i <= *n; i++) {
-    pi_4 += sign / (2 * i - 1);
+  for (int i = 0; i < *n; i++) {
+    pi_4 += sign / (2 * i + 1);
     sign *= -1;
   }
   
@@ -106,8 +106,8 @@ double pi_approx_cpp(int n) {
   double pi_4 = 0;
   double sign = 1;
   
-  for (int i = 1; i <= n; i++) {
-    pi_4 += sign / (2 * i - 1);
+  for (int i = 0; i < n; i++) {
+    pi_4 += sign / (2 * i + 1);
     sign *= -1;
   }
   
@@ -155,14 +155,15 @@ use extendr_api::prelude::*;
 fn pi_approx_rs(n: i32) -> f64 {
     let mut pi_4 = 0.0;
     let mut sign = 1.0;
-    
-    for i in 1..=n {
-        pi_4 += sign / (2 * i - 1) as f64;
+
+    for i in 0..n {
+        pi_4 += sign / (2 * i + 1) as f64;
         sign *= -1.0;
     }
-    
+
     4.0 * pi_4
 }
+
 ```
 
 After compiling, just like C++, the `pi_approx_rs` function in Rust will be saved into R Global Environment directly. 
@@ -243,8 +244,8 @@ def pi_approx_py(n):
     pi_4 = 0
     sign = 1
     
-    for i in range(1, n + 1):
-        pi_4 += sign / (2 * i - 1)
+    for i in range(n):
+        pi_4 += sign / (2 * i + 1)
         sign *= -1
     return pi_4 * 4
 
@@ -486,6 +487,223 @@ bench::mark(
 
 
 :::
+
+## Monte Carlo Estimation
+
+Buffon needles
+
+::: {.panel-tabset group="language"}
+
+### C
+
+```{c}
+#include <R.h>
+#include <Rinternals.h>
+
+void fib_c(int *n, int *seq) {
+    seq[0] = 0;
+    if (*n > 0) {
+        seq[1] = 1;
+        for (int i = 2; i <= *n; ++i) {
+            seq[i] = seq[i - 1] + seq[i - 2];
+        }
+    }
+}
+
+```
+
+
+```{r}
+fib_c <- function(n) {
+  seq <- integer(n + 1)
+  .C("fib_c", n = as.integer(n), seq = as.integer(seq))$seq
+}
+fib_c(10)
+```
+
+
+### C++
+
+```{Rcpp}
+#include <Rcpp.h>
+#include <random>
+#include <cmath>
+
+// [[Rcpp::depends(Rcpp)]]
+
+using namespace Rcpp;
+
+// Function to estimate pi using Buffon's needle experiment
+// [[Rcpp::export]]
+double estimatePi(double n) {
+    double l = 0.9;
+    double p = 0;
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<double> dis_angle(0.0, 360.0);
+    std::uniform_real_distribution<double> dis_x(0.0, 1.0);
+
+    for (long i = 0; i < n; i++) {
+        double k = dis_angle(gen);  // random angle
+        double x = dis_x(gen);      // random x (0 to 1)
+        double y = (l / 2) * sin(k * M_PI / 180);  // Convert angle to radians
+
+        if (x <= y) {
+            p++;  // Increment only if the condition is met
+        }
+    }
+
+    double pi = n / p;  // Divide by p, not l
+
+    return pi;
+}
+
+```
+
+### Julia
+
+```{julia}
+function fib_jl(n::Int)
+  fib = Int[]
+  push!(fib, 0)  
+  push!(fib, 1)  
+  
+  
+  for i in 3:n
+      push!(fib, fib[i - 1] + fib[i - 2])  
+  end
+  
+  return fib
+end
+```
+
+```{r}
+fib_jl <- JuliaCall::julia_eval("fib_jl")
+fib_jl(10L)
+```
+
+
+
+### Rust
+
+```{extendrsrc}
+use extendr_api::prelude::*;
+use std::collections::HashMap;
+
+fn fibonacci(n: i32, memo: &mut HashMap<i32, i32>) -> i32 {
+    if let Some(&result) = memo.get(&n) {
+        return result;
+    }
+
+    let result = if n <= 1 {
+        n
+    } else {
+        fibonacci(n - 1, memo) + fibonacci(n - 2, memo)
+    };
+
+    memo.insert(n, result);
+    result
+}
+
+#[extendr]
+fn fib_rs(n: i32) -> Vec<i32> {
+    let mut sequence = vec![];
+    let mut memo = HashMap::new();
+
+    for i in 0..n + 1 {
+        sequence.push(fibonacci(i, &mut memo));
+    }
+
+    sequence
+}
+
+```
+
+```{r}
+fib_rs(10)
+```
+
+
+### FORTRAN
+
+```{fortran95}
+subroutine fib_f(n, fib)
+    integer, intent(in) :: n
+    integer, intent(out) :: fib(n)
+    integer :: i
+    
+    fib(1) = 0
+    fib(2) = 1
+
+    do i = 3, n + 1
+        fib(i) = fib(i-1) + fib(i-2)
+    end do
+
+end subroutine fib_f
+```
+
+
+```{r}
+fib_fortran <- function(n) {
+  n <- n + 1
+  .Fortran("fib_f", as.integer(n), fib = integer(n))$fib
+}
+fib_fortran(10)
+```
+
+
+### R
+
+```{r}
+fib_r <- function(n) {
+  fib <- integer(n + 1)
+  fib[1] <- 0
+  fib[2] <- 1
+  for (i in 3:(n+1)) {
+    fib[i] <- fib[i - 1] + fib[i - 2]
+  }
+  return(fib)
+}
+
+fib_r(10)
+```
+
+
+### Python
+
+```{python}
+def fib_p(n):
+    n = int(n)
+    fib_seq = [0, 1]
+    for i in range(2, n + 1):
+        fib_seq.append(fib_seq[-1] + fib_seq[-2])
+    return fib_seq
+
+
+
+```
+
+```{r}
+fib_py <- reticulate::py$fib_p
+fib_py(10)
+```
+
+
+### Benchmarks
+
+```{r}
+bench::mark(
+  C = fib_c(40),
+  Cpp = fib_cpp(40),
+  Julia = fib_jl(41L),
+  Rust = fib_rs(40),
+  FORTRAN = fib_fortran(40),
+  R = fib_r(40),
+  Python = fib_py(40),
+  check = F
+)
+```
+
 
 
 ## Conclusion

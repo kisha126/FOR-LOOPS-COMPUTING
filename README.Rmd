@@ -1,0 +1,19 @@
+---
+title: "Comparison of `for` loops from various programming languages"
+output: github_document
+---
+
+
+
+**(Page under construction)**
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This documentation is to show you how to integrate other languages and leverage their strength in computations into R.
+
+
