@@ -52,15 +52,33 @@ Here are the list of languages will be used in this activity:
     -   Python is an effective general purpose language that can be even used in statistics or any fields of computing.
 
 They are all high level languages (or I should say some of them are close to high level languages) and share similarities.
-I only used those languages that can be both used in computing and listed in `knitr`.
+I only used those languages that can be both used in computing and listed in `knitr`. Also, I wrapped the codes from other languages so that it would be easy for me to benchmark them with `bench::time`.
 
 ## Approximating $\pi$
+
+It took hundreds of years to precisely approximate the $\pi$. 
+
+I used the Leibniz formula to approximate $\pi$. It came from an alternating series, a power series of $\frac{1}{x^2+1}$.
+
+This is how Leibniz formula looks like:
+
+$$
+\pi=4\sum_{k = 0}^{\infty} {\frac{(-1)^k}{2k + 1}}
+$$
+
+We need to adjust a little bit for the programming languages that starts with index-1, like R, Julia and FORTRAN.
+
+This is how Leibniz formula looks like:
+
+$$
+\pi=4\sum_{k = 1}^{\infty} {\frac{(-1)^k}{2k - 1}}
+$$
 
 ::: {.panel-tabset group="language"}
 
 ### C
 
-If your purpose is a language for computing within R, C is maybe easier than C++ but in order this to be working and exportable, the result of the computation is needed to store the memory address, a.k.a. the pointers.
+If your purpose is a language for fast computation within R, C is maybe easier than C++ but in order this to be working and exportable, the inputs and outputs of the computation were stored in the memory address, a.k.a. the pointers.
 
 ```{c pi-c}
 #include <stdio.h>
@@ -79,7 +97,7 @@ void pi_approx_c(int *n, double *result) {
 
 ```
 
-In order to natively call the C code into R, use `.C` and then extract the result via `$res`.
+In order to wrap the C code into R, use `.C` and then extract the result via `$res`.
 
 ```{r}
 pi_approx_c <- function(n) {
@@ -93,9 +111,9 @@ pi_approx_c(1e5)
 
 ### C++
 
-Here, the C++ code is way similar to the C code except, we don't need to use *pointers* in order the result to store its memory address. Like I said, using Rcpp, the C++ code is so easy to be exported, as long as its error-free.
+Here, the C++ code is way similar to the C code except, we don't need to use *pointers* in order share the results in a memory address, instead we only write the C++ code in a standard way. Like I said, using Rcpp, the C++ code is so easy to be exported, as long as we made it to be error-free.
 
-After compiling, you don't need to call it and the `pi_approx_cpp` will be saved into R Global Environment directly.
+After compiling, the `pi_approx_cpp` function will be exported by `// [[Rcpp::export]]` attributes and saved into R Global Environment directly.
 
 ```{Rcpp pi-cpp}
 #include <Rcpp.h>
@@ -137,7 +155,9 @@ function pi_approx_jl(n)
 end
 ```
 
-With *JuliaCall*, you can call the Julia function into R via `julia_eval`. But there are few other ways to call it, but I found `julia_eval` more convenient.
+With *JuliaCall*, you can wrap the Julia function into R via `julia_eval`. But there are few other ways to call it, but I found `julia_eval` more convenient. 
+
+(Note: If you are already familiar with `reticulate`, this is the same as `py_eval`)
 
 ```{r}
 pi_approx_jl <- JuliaCall::julia_eval("pi_approx_jl")
@@ -146,7 +166,7 @@ pi_approx_jl(1e5)
 
 ### Rust
 
-Here, we use the `extendr` API to compile the Rust code into R, just like we did with Rcpp to compile the C++ code into R.
+Here, we use the `extendr` and `#[extendr]` attribute API to write a Rust code and compile it into R, just like we did with Rcpp to compile the C++ code into R
 
 ```{extendrsrc pi-rs}
 use extendr_api::prelude::*;
@@ -166,7 +186,7 @@ fn pi_approx_rs(n: i32) -> f64 {
 
 ```
 
-After compiling, just like C++, the `pi_approx_rs` function in Rust will be saved into R Global Environment directly. 
+After compiling, just like C++, the `pi_approx_rs` function in Rust will be wrapped and saved into R Global Environment directly. 
 
 ```{r}
 pi_approx_rs(1e5)
@@ -259,6 +279,8 @@ pi_approx_py(1e5)
 ```
 
 ### Benchmarks
+
+The benchmarks are the same when I capture the date and time, similar to `Sys.time` in R. For example, when I run the Python code for $\pi$ approximation (same code as example) and benchmark it with `time` module for the first time, I got a difference of 17 seconds. Plus, the `mark` function from `bench` package is so precise that I use this package everytime when I benchmark the codes.
 
 ```{r}
 pi_approx_bm <- bench::mark(
@@ -710,19 +732,20 @@ bench::mark(
 
 I thought the outcome stays the same. Sometimes, when I make another run on approximating $\pi$, C is the fastest while sometimes FORTRAN is the fastest. Only if I make a Quarto Documentation out of this code, or otherwise, C++ is surely the fastest.
 
-The outcome that I am sure for this example:
+The remarks that I am sure for this example:
 
 1.  R or Python shares the outcome: Being the slowest among them.
 2.  The Rust code is just not optimized.
+    -   Same thing for other languages, especially Julia.
 3.  C++ is the fastest in some application here.
     -   Recursive Fibonacci Sequence
 
+
 So here's my take:
 
--   Surely that C++ code is only code that can make R code faster.
--   FORTRAN code makes the solution more boilerplate unless you want a more boilerplate codes.
+-   Surely that C++ code is only code that can make R code faster. Among the lower languages, C++ is the easiest language to compile but you need to write a boilerplate C++ code in order to work.
+-   FORTRAN code makes the solution the more boilerplate.
 -   Use vectorized operations or parallel computing to make the code more faster.
--   In Data Science, it is more advisable to use libraries that are more optimized, such as sklearn, tidymodels, etc...
 
 
 
