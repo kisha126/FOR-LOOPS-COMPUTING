@@ -8,12 +8,22 @@ website:
       - href: index.qmd
         text: Home
       - about.qmd
+    tools:
+      - icon: github
+        menu:
+          - text: Source Code
+            href:  https://code.com
+          - text: Report a Bug
+            href:  https://bugs.com
+
 
 format:
   html:
-    theme: cosmo
-    css: styles.css
+    theme:
+      - darkly
     toc: true
+    toc_float: true
+    css: styles.css
 
 editor: visual
 
