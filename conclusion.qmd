@@ -1,0 +1,19 @@
+## Conclusion
+
+I thought the outcome stays the same. Sometimes, when I make another run on approximating $\pi$, C is the fastest while sometimes FORTRAN is the fastest. Only if I make a Quarto Documentation out of this code, or otherwise, C++ is surely the fastest.
+
+The remarks that I am sure for this example:
+
+1.  R or Python shares the outcome: Being the slowest among them.
+2.  The Rust code is just not optimized.
+    -   Same thing for other languages, especially Julia.
+3.  C++ is the fastest in some application here.
+    -   Recursive Fibonacci Sequence
+
+
+So here's my take:
+
+-   Surely that C++ code is only code that can make R code faster. Among the lower languages, C++ is the easiest language to compile but you need to write a boilerplate C++ code in order to work.
+-   FORTRAN code makes the solution the more boilerplate.
+-   Use vectorized operations or parallel computing to make the code more faster.
+

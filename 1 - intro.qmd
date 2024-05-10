@@ -1,0 +1,28 @@
+## Languages
+
+Here are the list of languages will be used in this activity:
+
+1.  C
+    -   C is maybe the easiest *compiled* language to learn. It is so easy to compile a C code into R.
+2.  C++
+    -   Despite its reputation for complexity, leveraging tools like Rcpp and its APIs makes writing C++ code more accessible. Plus, exporting C++ code into the R environment is a breeze, even I, who sometimes write a bad code, can write a C++ code and it is so easy to export a C++ code into R environment.
+    -   Compared to C, compilation in C++ might take a bit longer due to various factors.
+    -   with the Rcpp namespace, you can seamlessly integrate C++ features like *NumericVector* and *DataFrame*, mirroring R's class system.
+3.  Julia
+    -   Julia shares similarities with C in that it's a compiled language, effectively addressing the "2 language problem" by eliminating the need for separate languages like C, C++, or FORTRAN APIs.
+    -   Julia is a JIT compiled and it is able to be both fast and easy to read.
+4.  Rust
+    -   Rust, akin to C/C++, prioritizes memory safety. 
+    -   Preparing to compile Rust code in R involves installing necessary Build Tools and rustc cargo via the terminal.
+5.  FORTRAN
+    -   Despite its age, FORTRAN remains indispensable in the realm of computing, boasting speed comparable to C/C++. 
+    -   It's still widely used as *source* code for R packages, *fAsianOptions* as its example.
+6.  R
+    -   While maybe R isn't exclusively utilized for computing, it's a statistical computing language widely embraced in statistical analysis.
+    -   With R, it is so easy to conduct a pure data science like data manipulation and visulizations, thanks to the libraries, such as *dplyr* and *ggplot2*, and to integrate "structured" databases with *DBI* and *dbplyr*.
+    
+7.  Python
+    -   Python is an effective general purpose language that can be even used in statistics or any fields of computing.
+
+They are all high level languages (or I should say some of them are close to high level languages) and share similarities.
+I only used those languages that can be both used in computing and listed in `knitr`. Also, I wrapped the codes from other languages so that it would be easy for me to benchmark them with `bench::time`.

@@ -1,0 +1,255 @@
+## Approximating $\pi$
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+knitr::knit_engines$set(extendrsrc = rextendr::eng_extendrsrc)
+```
+
+It took hundreds of years to precisely approximate the $\pi$. 
+
+I used the Leibniz formula to approximate $\pi$. It came from an alternating series, a power series of $\frac{1}{x^2+1}$.
+
+This is how Leibniz formula looks like:
+
+$$
+\pi=4\sum_{k = 0}^{\infty} {\frac{(-1)^k}{2k + 1}}
+$$
+
+We need to adjust a little bit for the programming languages that starts with index-1, like R, Julia and FORTRAN.
+
+This is how Leibniz formula looks like:
+
+$$
+\pi=4\sum_{k = 1}^{\infty} {\frac{(-1)^k}{2k - 1}}
+$$
+
+::: {.panel-tabset group="language"}
+
+### C
+
+If your purpose is a language for fast computation within R, C is maybe easier than C++ but in order this to be working and exportable, the inputs and outputs of the computation were stored in the memory address, a.k.a. the pointers.
+
+```{c pi-c}
+#include <stdio.h>
+
+void pi_approx_c(int *n, double *result) {
+  double pi_4 = 0;
+  double sign = 1;
+  
+  for (int i = 0; i < *n; i++) {
+    pi_4 += sign / (2 * i + 1);
+    sign *= -1;
+  }
+  
+  *result = 4 * pi_4;
+}
+
+```
+
+In order to wrap the C code into R, use `.C` and then extract the result via `$res`.
+
+```{r}
+pi_approx_c <- function(n) {
+  res <- .C("pi_approx_c", as.integer(n), res=numeric(1))$res
+  return(res)
+}
+
+pi_approx_c(1e5)
+
+```
+
+### C++
+
+Here, the C++ code is way similar to the C code except, we don't need to use *pointers* in order share the results in a memory address, instead we only write the C++ code in a standard way. Like I said, using Rcpp, the C++ code is so easy to be exported, as long as we made it to be error-free.
+
+After compiling, the `pi_approx_cpp` function will be exported by `// [[Rcpp::export]]` attributes and saved into R Global Environment directly.
+
+```{Rcpp pi-cpp}
+#include <Rcpp.h>
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+double pi_approx_cpp(int n) {
+  double pi_4 = 0;
+  double sign = 1;
+  
+  for (int i = 0; i < n; i++) {
+    pi_4 += sign / (2 * i + 1);
+    sign *= -1;
+  }
+  
+  return 4 * pi_4;
+}
+
+/***R
+pi_approx_cpp(1e5)
+*/
+
+
+```
+
+### Julia
+
+As you can see, we only write few codes, unlike in C/C++, to approximate the $\pi$
+
+```{julia pi-jl}
+function pi_approx_jl(n)
+    pi_4 = 0.0
+    sign = 1.0
+    for i in 1:n
+        pi_4 += sign / (2*i - 1)
+        sign *= -1
+    end
+    return 4 * pi_4
+end
+```
+
+With *JuliaCall*, you can wrap the Julia function into R via `julia_eval`. But there are few other ways to call it, but I found `julia_eval` more convenient. 
+
+(Note: If you are already familiar with `reticulate`, this is the same as `py_eval`)
+
+```{r}
+pi_approx_jl <- JuliaCall::julia_eval("pi_approx_jl")
+pi_approx_jl(1e5)
+```
+
+### Rust
+
+Here, we use the `extendr` and `#[extendr]` attribute API to write a Rust code and compile it into R, just like we did with Rcpp to compile the C++ code into R
+
+```{extendrsrc pi-rs}
+use extendr_api::prelude::*;
+
+#[extendr]
+fn pi_approx_rs(n: i32) -> f64 {
+    let mut pi_4 = 0.0;
+    let mut sign = 1.0;
+
+    for i in 0..n {
+        pi_4 += sign / (2 * i + 1) as f64;
+        sign *= -1.0;
+    }
+
+    4.0 * pi_4
+}
+
+```
+
+After compiling, just like C++, the `pi_approx_rs` function in Rust will be wrapped and saved into R Global Environment directly. 
+
+```{r}
+pi_approx_rs(1e5)
+```
+
+### FORTRAN
+
+Maybe FORTRAN is fast, but the solution is more boilerplate, although for me it is more readable compared to C/C++. Just like C, we need the result to be store in memory address.
+
+If you use old FORTRAN version, you might need to CAPITALIZE the FORTRAN program. But we use the '95 version of FORTRAN so we don't need to CAPITALIZE the program.
+
+```{fortran95 pi-f95}
+subroutine pi_approx(n, result)
+    implicit none
+    integer, intent(in) :: n
+    real(8), intent(out) :: result
+    integer :: i
+    real(8) :: pi_4, sign
+    
+    pi_4 = 0.0
+    sign = 1.0
+    
+    do i = 1, n
+        pi_4 = pi_4 + sign / (2 * i - 1)
+        sign = sign * (-1.0)
+    end do
+    
+    result = 4 * pi_4
+end subroutine pi_approx
+```
+
+Just like C, but instead, in order to natively call the FORTRAN code into R, use `.Fortran` and then extract the result via `$result`.
+
+```{r}
+pi_approx_fortran <- function(n) {
+  result <- .Fortran("pi_approx", as.integer(n), result=double(1))$result
+  return(result)
+}
+
+pi_approx_fortran(1e5)
+
+```
+
+### R
+
+R is so close to be functional programming and to be Domain Specific Language (or DSL). It is so functional, you need to use ` <- function()` to define a function and I sometimes agree that this is ugly but hey it works! This is just my opinion.
+
+R is already a default language in RStudio, so the function we define is already callable in R Global Environment.
+
+```{r pi-r}
+pi_approx_r <- function(n) {
+  pi_4 <- 0
+  sign <- 1
+  
+  for (i in 1:n) {
+    pi_4 <- pi_4 + sign / (2*i - 1)
+    sign <- sign * -1
+  }
+  
+  return(4 * pi_4)
+}
+
+pi_approx_r(1e5)
+
+```
+
+### Python
+
+R and Python has so much similarities, except Python is more onto general purpose language.
+
+
+```{python pi-py}
+def pi_approx_py(n):
+    n = int(n)
+    pi_4 = 0
+    sign = 1
+    
+    for i in range(n):
+        pi_4 += sign / (2 * i + 1)
+        sign *= -1
+    return pi_4 * 4
+
+```
+
+The defined function in Python is also callable. Using `py` module in `reticulate` package, you can easily interact with any Python objects in Python module.
+
+```{r}
+pi_approx_py <- reticulate::py$pi_approx_py
+pi_approx_py(1e5)
+```
+
+:::
+
+## Benchmarks
+
+The benchmarks are the same when I capture the date and time, similar to `Sys.time` in R. For example, when I run the Python code for $\pi$ approximation (same code as example) and benchmark it with `time` module for the first time, I got a difference of 17 seconds. Plus, the `mark` function from `bench` package is so precise that I use this package everytime when I benchmark the codes.
+
+```{r}
+pi_approx_bm <- bench::mark(
+  C = pi_approx_c(1e8),
+  Cpp = pi_approx_cpp(1e8),
+  Julia = pi_approx_jl(1e8),
+  Rust = pi_approx_rs(1e8),
+  FORTRAN = pi_approx_fortran(1e8),
+  R = pi_approx_r(1e8),
+  Python = pi_approx_py(1e8),
+  check = F
+)
+pi_approx_bm
+
+pi_approx_bm |> plot()
+```
+
+From this result, we can say that the C++ is the fastest language among the 7 languages I selected for computing in using `for` loops, following with C and FORTRAN.
+

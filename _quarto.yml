@@ -3,18 +3,33 @@ project:
 
 website:
   title: "FOR-LOOPS-ARCHIVE"
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - section: "Introduction"
+        contents:
+          - 1 - intro.qmd
+      - section: "Approximating Pi"
+        contents:
+          - 2 - pi_approx.qmd
+      - section: "Recursive Fibonacci Sequence"
+        contents:
+          - 3 - fib.qmd
+      - section: "Conclusion"
+        contents:
+          - conclusion.qmd
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
     tools:
       - icon: github
         menu:
           - text: Source Code
-            href:  https://code.com
-          - text: Report a Bug
-            href:  https://bugs.com
+            href:  https://github.com/kishinsagume12/FOR-LOOPS-COMPUTING
+          - text: Request on Issue
+            href:  https://github.com/kishinsagume12/FOR-LOOPS-COMPUTING/issues
 
 
 format:

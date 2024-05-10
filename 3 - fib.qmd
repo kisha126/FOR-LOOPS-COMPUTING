@@ -1,0 +1,217 @@
+## Recursive Fibonacci Sequence
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+knitr::knit_engines$set(extendrsrc = rextendr::eng_extendrsrc)
+```
+
+
+Same procedure as approximating the $\pi$, compile and then compile
+
+::: {.panel-tabset group="language"}
+
+### C
+
+```{c}
+#include <R.h>
+#include <Rinternals.h>
+
+void fib_c(int *n, int *seq) {
+    seq[0] = 0;
+    if (*n > 0) {
+        seq[1] = 1;
+        for (int i = 2; i <= *n; ++i) {
+            seq[i] = seq[i - 1] + seq[i - 2];
+        }
+    }
+}
+
+```
+
+
+```{r}
+fib_c <- function(n) {
+  seq <- integer(n + 1)
+  .C("fib_c", n = as.integer(n), seq = as.integer(seq))$seq
+}
+fib_c(10)
+```
+
+
+### C++
+
+```{Rcpp}
+#include <Rcpp.h>
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+IntegerVector fib_cpp(int n){
+  IntegerVector fibSequence(n + 1);
+  fibSequence[0] = 0;
+  if (n > 1) {
+    fibSequence[1] = 1;
+    for (int i = 2; i <= n; ++i) {
+      fibSequence[i] = fibSequence[i - 1] + fibSequence[i - 2];
+    }
+  }
+  return fibSequence;
+  
+}
+
+
+/***R
+fib_cpp(10)
+*/
+```
+
+### Julia
+
+```{julia}
+function fib_jl(n::Int)
+  fib = Int[]
+  push!(fib, 0)  
+  push!(fib, 1)  
+  
+  
+  for i in 3:n
+      push!(fib, fib[i - 1] + fib[i - 2])  
+  end
+  
+  return fib
+end
+```
+
+```{r}
+fib_jl <- JuliaCall::julia_eval("fib_jl")
+fib_jl(10L)
+```
+
+
+
+### Rust
+
+```{extendrsrc}
+use extendr_api::prelude::*;
+use std::collections::HashMap;
+
+fn fibonacci(n: i32, memo: &mut HashMap<i32, i32>) -> i32 {
+    if let Some(&result) = memo.get(&n) {
+        return result;
+    }
+
+    let result = if n <= 1 {
+        n
+    } else {
+        fibonacci(n - 1, memo) + fibonacci(n - 2, memo)
+    };
+
+    memo.insert(n, result);
+    result
+}
+
+#[extendr]
+fn fib_rs(n: i32) -> Vec<i32> {
+    let mut sequence = vec![];
+    let mut memo = HashMap::new();
+
+    for i in 0..n + 1 {
+        sequence.push(fibonacci(i, &mut memo));
+    }
+
+    sequence
+}
+
+```
+
+```{r}
+fib_rs(10)
+```
+
+
+### FORTRAN
+
+```{fortran95}
+subroutine fib_f(n, fib)
+    integer, intent(in) :: n
+    integer, intent(out) :: fib(n)
+    integer :: i
+    
+    fib(1) = 0
+    fib(2) = 1
+
+    do i = 3, n + 1
+        fib(i) = fib(i-1) + fib(i-2)
+    end do
+
+end subroutine fib_f
+```
+
+
+```{r}
+fib_fortran <- function(n) {
+  n <- n + 1
+  .Fortran("fib_f", as.integer(n), fib = integer(n))$fib
+}
+fib_fortran(10)
+```
+
+
+### R
+
+```{r}
+fib_r <- function(n) {
+  fib <- integer(n + 1)
+  fib[1] <- 0
+  fib[2] <- 1
+  for (i in 3:(n+1)) {
+    fib[i] <- fib[i - 1] + fib[i - 2]
+  }
+  return(fib)
+}
+
+fib_r(10)
+```
+
+
+### Python
+
+```{python}
+def fib_p(n):
+    n = int(n)
+    fib_seq = [0, 1]
+    for i in range(2, n + 1):
+        fib_seq.append(fib_seq[-1] + fib_seq[-2])
+    return fib_seq
+
+
+
+```
+
+```{r}
+fib_py <- reticulate::py$fib_p
+fib_py(10)
+```
+
+:::
+
+## Benchmarks
+
+```{r}
+bench::mark(
+  C = fib_c(40),
+  Cpp = fib_cpp(40),
+  Julia = fib_jl(41L),
+  Rust = fib_rs(40),
+  FORTRAN = fib_fortran(40),
+  R = fib_r(40),
+  Python = fib_py(40),
+  check = F
+)
+```
+
+
+
+
+
