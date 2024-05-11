@@ -1,28 +1,96 @@
-## Languages
+## 1.1 Languages
 
-Here are the list of languages will be used in this activity:
+As I said in the introduction, these are only the list where you can integrate into R.
+
+Here are the list of languages will be used in this document:
 
 1.  C
-    -   C is maybe the easiest *compiled* language to learn. It is so easy to compile a C code into R.
+    -   First released in 1970s.
+
+    -   C is maybe the easiest *compiled* language to learn that is used for Operating Systems. It is so easy to compile a C code to R.
+
+    -   In order to compile C in R, you need to convert the C code into a binary source code and then you can call it using `.C`.
+
+    -   Usage:
+
+        ``` powershell
+        gcc -shared -o foo.so foo.c
+        ```
+
+    -   Personal Experience:
+
+        -   a year
+        -   C is hard for me to write.
 2.  C++
+    -   An extension to C.
+
     -   Despite its reputation for complexity, leveraging tools like Rcpp and its APIs makes writing C++ code more accessible. Plus, exporting C++ code into the R environment is a breeze, even I, who sometimes write a bad code, can write a C++ code and it is so easy to export a C++ code into R environment.
+
     -   Compared to C, compilation in C++ might take a bit longer due to various factors.
-    -   with the Rcpp namespace, you can seamlessly integrate C++ features like *NumericVector* and *DataFrame*, mirroring R's class system.
+
+    -   Download `Rcpp` and its necessary build tools first. With the Rcpp namespace, you can seamlessly integrate `Rcpp` (C++) features like *NumericVector* and *DataFrame*, mirroring R's class system.
+
+    -   Personal Experience:
+
+        -   A year.
+        -   With `Rcpp`, it became easy for me to learn this language but C++ is still hard for me.
+        -   I am still insecure to use this language at all.
 3.  Julia
     -   Julia shares similarities with C in that it's a compiled language, effectively addressing the "2 language problem" by eliminating the need for separate languages like C, C++, or FORTRAN APIs.
     -   Julia is a JIT compiled and it is able to be both fast and easy to read.
+    -   Necessary tools: [Julia](https://julialang.org/downloads/) and `JuliaCall`.
+    -   Personal Experience:
+        -   a year.
+        -   Great language but bothered to learn unless until I master R, Python, and C++.
 4.  Rust
-    -   Rust, akin to C/C++, prioritizes memory safety. 
-    -   Preparing to compile Rust code in R involves installing necessary Build Tools and rustc cargo via the terminal.
+    -   Rust, akin to C/C++, prioritizes memory safety.
+
+    -   Preparing to compile Rust code in R involves installing necessary package (i.e. `extendr/rextendr`), [`Build Tools`](https://visualstudio.microsoft.com/visual-cpp-build-tools/) and [`rustc`](https://www.rust-lang.org/tools/install?platform_override=win) and then install the cargo via the terminal.
+
+    -   Personal Experience:
+
+        -   Since December 2023. If I remember it correctly, I was amazed by this language because of `Polars`.
+
+        -   I need to master R, Python, and C++ first, and then I won't bother myself learn this language.
+
+        -   Installation is such a pain. If you ignore it, using Rust is such an amazing experience.
 5.  FORTRAN
-    -   Despite its age, FORTRAN remains indispensable in the realm of computing, boasting speed comparable to C/C++. 
+    -   Despite its age, FORTRAN remains indispensable in the realm of computing, boasting speed comparable to C/C++.
+
     -   It's still widely used as *source* code for R packages, *fAsianOptions* as its example.
+
+    -   Just like C, in order to compile FORTRAN in R, you need to convert the FORTRAN code into a binary source code and then you can call it using `.Fortran`.
+
+    -   Usage:
+
+        ``` powershell
+        gfortran -shared -o foo.so foo.f90
+        ```
+
+    -   Personal Experience:
+
+        -   I learn this language recently when I learnt the history of R.
+
+        -   Same as C but I'm bothered to learn it.
 6.  R
+    -   R is actually derived from S, a statistical programming language created by Bell Labs.
     -   While maybe R isn't exclusively utilized for computing, it's a statistical computing language widely embraced in statistical analysis.
-    -   With R, it is so easy to conduct a pure data science like data manipulation and visulizations, thanks to the libraries, such as *dplyr* and *ggplot2*, and to integrate "structured" databases with *DBI* and *dbplyr*.
-    
+    -   With R, it is so easy to conduct a pure data science like data manipulation and visualizations, thanks to the libraries, such as *dplyr* and *ggplot2*, and to integrate "structured" databases with *DBI* and *dbplyr*.
+    -   Just like Python, R is an interpreted language.
+    -   To use R and its IDE, RStudio, you need to download them first.
+        -   R: <https://cran.r-project.org/bin/windows/base/>
+        -   RStudio: <https://posit.co/download/rstudio-desktop/>
+    -   Personal Experience:
+        -   3 years. Of course, I am a statistics student.
+        -   I started learning this language way back when I was high school student, but started to re-learn this language when I study statistics.
 7.  Python
     -   Python is an effective general purpose language that can be even used in statistics or any fields of computing.
+    -   To use Python in R, you need to install Python and `reticulate` first.
+        -   If you install [Python](https://www.python.org/downloads/) in its webpage, configure the path into its system environment variables and then configure it into RStudio (you can find its option in `Global Option` or simply call `py_config` and then put the path as its argument.
+        -   If you install Python using `install_python`, it will automatically create a virtual environment (it is separated to the Python you installed into the System).
+        -   Separately to the system, you can install its conda environment `conda_install`.
+    -   Personal Experience:
+        -   2 years.
+        -   When I study statistics.
 
-They are all high level languages (or I should say some of them are close to high level languages) and share similarities.
-I only used those languages that can be both used in computing and listed in `knitr`. Also, I wrapped the codes from other languages so that it would be easy for me to benchmark them with `bench::time`.
+They are all high level languages (or I should say some of them are close to high level languages) and share similarities. To be real, not all the programming languages listed here is what I can write by my own, they are FORTRAN, Rust, and C. Moreover, I only used those languages that can be both used in computing and listed in `knitr`. Also, I wrapped the codes from other languages so that it would be easy for me to benchmark them with `bench::time`.

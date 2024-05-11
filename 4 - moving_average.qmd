@@ -1,0 +1,243 @@
+## 4.1 Moving Average
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+knitr::knit_engines$set(extendrsrc = rextendr::eng_extendrsrc)
+```
+
+
+
+```{r}
+set.seed(123)
+zz <- rnorm(1e4, mean = 10, sd = 1.5)
+```
+
+For the languages that are strict to the data types (which in this case, Julia, Rust, and Python), I cannot run their functions if the array argument is not double and the `window size` argument is not an integer. That's why, I need to convert the array into `double` and I need to put `L` followed from number so that the number becomes strictly `integer`. 
+
+::: {.panel-tabset group="language"}
+
+### C
+
+```{c, results='hide', warning=FALSE, message=FALSE}
+#include <stdio.h>
+#include <stdlib.h>
+
+void moving_ave_c(double *x, int *n, int *window_size, double *moving_averages) {
+    int result_size = *n - *window_size + 1;
+    double *paddedX = (double *)malloc(result_size * sizeof(double));
+
+    if (paddedX == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        free(paddedX);
+        return;
+    }
+
+    for (int i = 0; i < result_size; i++) {
+        moving_averages[i] = 0;
+        for (int j = 0; j < *window_size; j++) {
+            moving_averages[i] += x[i + j];
+        }
+        moving_averages[i] /= *window_size;
+    }
+
+    free(paddedX);
+}
+
+```
+
+```{r}
+moving_ave_c <- function(x, window_size) {
+     result_size <- length(x) - window_size + 1
+     moving_averages <- double(result_size)
+     moving_averages <- .C("moving_ave_c",
+                           as.double(x), as.integer(length(x)), as.integer(window_size),
+                           moving_averages = double(result_size))$moving_averages
+     return(moving_averages)
+}
+
+moving_ave_c(1:10, 3)
+```
+
+### C++
+
+```{Rcpp}
+#include <Rcpp.h>
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+NumericVector moving_ave_cpp(NumericVector x, int window_size) {
+  int result_size = x.size() - window_size + 1;
+  NumericVector moving_averages(result_size);
+
+  for (int i = 0; i < result_size; i++) {
+    double sum = 0.0;
+    for (int j = i; j < i + window_size; j++) {
+      sum += x[i + j];
+    }
+    moving_averages[i] = sum / window_size;
+  }
+
+  return moving_averages;
+}
+
+```
+
+### Julia
+
+```{julia}
+function moving_ave_julia(x::Vector{Float64}, n::Int)
+    len = length(x)
+    moving_averages = Vector{Float64}(undef, len - n + 1)
+    
+    for i in 1:len - n + 1
+        window_sum = sum(x[i:i+n-1])
+        moving_averages[i] = round(window_sum / n, digits=2)
+    end
+    
+    return moving_averages
+end
+```
+
+
+```{r}
+moving_ave_jl <- JuliaCall::julia_eval("moving_ave_julia")
+moving_ave_jl(as.double(1:10), 3L)
+```
+
+
+### Rust
+
+```{extendrsrc}
+use extendr_api::prelude::*;
+
+#[extendr]
+fn moving_ave_rs(x: Vec<f64>, n: i32) -> Vec<f64> {
+    let len = x.len();
+    let mut moving_averages = Vec::with_capacity(len - n as usize + 1);
+
+    for i in 0..=len - n as usize {
+        let window_sum: f64 = x[i..i + n as usize].iter().sum();
+        moving_averages.push(window_sum / n as f64);
+    }
+
+    moving_averages.iter().map(|&x| (x * 100.0).round() / 100.0).collect()
+}
+
+```
+
+
+```{r}
+moving_ave_rs(as.double(1:10), 3L)
+```
+
+
+### FORTRAN
+
+```{fortran95, results='hide', warning=FALSE, message=FALSE}
+subroutine moving_ave_f(x, n, window_size, moving_averages)
+    implicit none
+    integer, intent(in) :: n, window_size
+    double precision, intent(in) :: x(n)
+    double precision, intent(out) :: moving_averages(n - window_size + 1)
+    integer :: i, j
+    double precision :: sum
+
+    do i = 1, n - window_size + 1
+        sum = 0.0d0
+        do j = i, i + window_size - 1
+            sum = sum + x(j)
+        end do
+        moving_averages(i) = sum / window_size
+    end do
+
+end subroutine moving_ave_f
+```
+
+
+```{r}
+moving_ave_fortran <- function(x, window_size) {
+     result_size <- length(x) - window_size + 1
+     moving_averages <- double(result_size)
+     moving_averages <- .Fortran("moving_ave_f",
+                           as.double(x), as.integer(length(x)), as.integer(window_size),
+                           moving_averages = double(result_size))$moving_averages
+     return(moving_averages)
+}
+
+moving_ave_fortran(1:10, 3)
+```
+
+### R
+
+```{r}
+moving_ave_r <- function(x, n) {
+    moving_averages <- numeric(length(x) - n + 1)
+    
+    for (i in 1:(length(x) - n + 1)) {
+        moving_averages[i] <- sum(x[i:(i + n - 1)]) / n
+    }
+    
+    return(round(moving_averages, 2))
+}
+
+moving_ave_r(1:10, 3)
+```
+
+
+### Python
+
+```{python}
+def moving_ave_py(arr, window_size):
+    i = 0
+    # Initialize an empty list to store moving averages
+    moving_averages = []
+
+    # Loop through the array to consider
+    # every window of size 'window_size'
+    while i < len(arr) - window_size + 1:
+
+        # Store elements from i to i+window_size
+        # in list to get the current window
+        window = arr[i : i + window_size]
+
+        # Calculate the average of the current window
+        window_average = round(sum(window) / window_size, 2)
+
+        # Store the average of the current window in the moving average list
+        moving_averages.append(window_average)
+
+        # Shift the window to the right by one position
+        i += 1
+
+    return moving_averages
+
+
+```
+
+```{r}
+moving_ave_py <- reticulate::py_eval("moving_ave_py")
+moving_ave_py(as.double(1:10), 3L)
+```
+
+
+:::
+
+## Benchmark
+
+```{r}
+bench::mark(
+    C = moving_ave_c(zz, 10),
+    `C++` = moving_ave_cpp(zz, 10),
+    Julia = moving_ave_jl(zz, 10L),
+    Rust = moving_ave_rs(zz, 10L),
+    FORTRAN = moving_ave_fortran(zz, 10),
+    R = moving_ave_r(zz, 10),
+    Python = moving_ave_py(zz, 10L),
+    check = F
+)
+```
+
+
+

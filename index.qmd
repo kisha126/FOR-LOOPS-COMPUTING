@@ -16,10 +16,12 @@ names(knitr::knit_engines$get())
 
 ## Introduction
 
-In this activity, I show you the programming languages that can be used in computing with the use of `for` loops. 
+In this document, I will show you the programming languages that can be used in computing with the use of `for` loops and how to wrap them into R. And also, I will share you my experiences of using these languages.
 
-Note that not all the programming languages are listed in this example because these are all the programming languages I know that can be exported into R.
+Note that not all the programming languages are listed and used in this documents. The programming languages listed and used in this document  are all the programming languages I know where you can write a code within it, integrate, and call them into R.
 
+This document is written in Quarto Website.
 
+*(Still under construction)*
 
 

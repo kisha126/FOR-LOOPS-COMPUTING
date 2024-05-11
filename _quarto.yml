@@ -16,6 +16,12 @@ website:
       - section: "Recursive Fibonacci Sequence"
         contents:
           - 3 - fib.qmd
+      - section: "Moving Average"
+        contents:
+          - 4 - moving_average.qmd
+      - section: "Convolution"
+        contents:
+          - 5 - convolution.qmd
       - section: "Conclusion"
         contents:
           - conclusion.qmd

@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -147,7 +181,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./1 - intro.html">Introduction</a></li><li class="breadcrumb-item"><a href="./1 - intro.html">Languages</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./1 - intro.html">Introduction</a></li><li class="breadcrumb-item"><a href="./1 - intro.html">1.1 Languages</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -179,7 +213,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./1 - intro.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Languages</span></a>
+ <span class="menu-text">1.1 Languages</span></a>
   </div>
 </li>
       </ul>
@@ -196,7 +230,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./2 - pi_approx.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Approximating <span class="math inline">\(\pi\)</span></span></a>
+ <span class="menu-text">2.1 Approximating <span class="math inline">\(\pi\)</span></span></a>
   </div>
 </li>
       </ul>
@@ -213,7 +247,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./3 - fib.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Recursive Fibonacci Sequence</span></a>
+ <span class="menu-text">3.1 Recursive Fibonacci Sequence</span></a>
   </div>
 </li>
       </ul>
@@ -221,12 +255,46 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
- <span class="menu-text">Conclusion</span></a>
+ <span class="menu-text">Moving Average</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./4 - moving_average.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4.1 Moving Average</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Convolution</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./5 - convolution.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5.1 Convolution</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">Conclusion</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./conclusion.html" class="sidebar-item-text sidebar-link">
@@ -245,7 +313,7 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#languages" id="toc-languages" class="nav-link active" data-scroll-target="#languages">Languages</a></li>
+  <li><a href="#languages" id="toc-languages" class="nav-link active" data-scroll-target="#languages">1.1 Languages</a></li>
   </ul>
 </nav>
     </div>
@@ -256,45 +324,105 @@ window.Quarto = {
 
 
 <section id="languages" class="level2">
-<h2 class="anchored" data-anchor-id="languages">Languages</h2>
-<p>Here are the list of languages will be used in this activity:</p>
+<h2 class="anchored" data-anchor-id="languages">1.1 Languages</h2>
+<p>As I said in the introduction, these are only the list where you can integrate into R.</p>
+<p>Here are the list of languages will be used in this document:</p>
 <ol type="1">
 <li>C
 <ul>
-<li>C is maybe the easiest <em>compiled</em> language to learn. It is so easy to compile a C code into R.</li>
+<li><p>First released in 1970s.</p></li>
+<li><p>C is maybe the easiest <em>compiled</em> language to learn that is used for Operating Systems. It is so easy to compile a C code to R.</p></li>
+<li><p>In order to compile C in R, you need to convert the C code into a binary source code and then you can call it using <code>.C</code>.</p></li>
+<li><p>Usage:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gcc <span class="op">-</span>shared <span class="op">-</span>o foo<span class="op">.</span><span class="fu">so</span> foo<span class="op">.</span><span class="fu">c</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Personal Experience:</p>
+<ul>
+<li>a year</li>
+<li>C is hard for me to write.</li>
+</ul></li>
 </ul></li>
 <li>C++
 <ul>
-<li>Despite its reputation for complexity, leveraging tools like Rcpp and its APIs makes writing C++ code more accessible. Plus, exporting C++ code into the R environment is a breeze, even I, who sometimes write a bad code, can write a C++ code and it is so easy to export a C++ code into R environment.</li>
-<li>Compared to C, compilation in C++ might take a bit longer due to various factors.</li>
-<li>with the Rcpp namespace, you can seamlessly integrate C++ features like <em>NumericVector</em> and <em>DataFrame</em>, mirroring R’s class system.</li>
+<li><p>An extension to C.</p></li>
+<li><p>Despite its reputation for complexity, leveraging tools like Rcpp and its APIs makes writing C++ code more accessible. Plus, exporting C++ code into the R environment is a breeze, even I, who sometimes write a bad code, can write a C++ code and it is so easy to export a C++ code into R environment.</p></li>
+<li><p>Compared to C, compilation in C++ might take a bit longer due to various factors.</p></li>
+<li><p>Download <code>Rcpp</code> and its necessary build tools first. With the Rcpp namespace, you can seamlessly integrate <code>Rcpp</code> (C++) features like <em>NumericVector</em> and <em>DataFrame</em>, mirroring R’s class system.</p></li>
+<li><p>Personal Experience:</p>
+<ul>
+<li>A year.</li>
+<li>With <code>Rcpp</code>, it became easy for me to learn this language but C++ is still hard for me.</li>
+<li>I am still insecure to use this language at all.</li>
+</ul></li>
 </ul></li>
 <li>Julia
 <ul>
 <li>Julia shares similarities with C in that it’s a compiled language, effectively addressing the “2 language problem” by eliminating the need for separate languages like C, C++, or FORTRAN APIs.</li>
 <li>Julia is a JIT compiled and it is able to be both fast and easy to read.</li>
+<li>Necessary tools: <a href="https://julialang.org/downloads/">Julia</a> and <code>JuliaCall</code>.</li>
+<li>Personal Experience:
+<ul>
+<li>a year.</li>
+<li>Great language but bothered to learn unless until I master R, Python, and C++.</li>
+</ul></li>
 </ul></li>
 <li>Rust
 <ul>
-<li>Rust, akin to C/C++, prioritizes memory safety.</li>
-<li>Preparing to compile Rust code in R involves installing necessary Build Tools and rustc cargo via the terminal.</li>
+<li><p>Rust, akin to C/C++, prioritizes memory safety.</p></li>
+<li><p>Preparing to compile Rust code in R involves installing necessary package (i.e.&nbsp;<code>extendr/rextendr</code>), <a href="https://visualstudio.microsoft.com/visual-cpp-build-tools/"><code>Build Tools</code></a> and <a href="https://www.rust-lang.org/tools/install?platform_override=win"><code>rustc</code></a> and then install the cargo via the terminal.</p></li>
+<li><p>Personal Experience:</p>
+<ul>
+<li><p>Since December 2023. If I remember it correctly, I was amazed by this language because of <code>Polars</code>.</p></li>
+<li><p>I need to master R, Python, and C++ first, and then I won’t bother myself learn this language.</p></li>
+<li><p>Installation is such a pain. If you ignore it, using Rust is such an amazing experience.</p></li>
+</ul></li>
 </ul></li>
 <li>FORTRAN
 <ul>
-<li>Despite its age, FORTRAN remains indispensable in the realm of computing, boasting speed comparable to C/C++.</li>
-<li>It’s still widely used as <em>source</em> code for R packages, <em>fAsianOptions</em> as its example.</li>
+<li><p>Despite its age, FORTRAN remains indispensable in the realm of computing, boasting speed comparable to C/C++.</p></li>
+<li><p>It’s still widely used as <em>source</em> code for R packages, <em>fAsianOptions</em> as its example.</p></li>
+<li><p>Just like C, in order to compile FORTRAN in R, you need to convert the FORTRAN code into a binary source code and then you can call it using <code>.Fortran</code>.</p></li>
+<li><p>Usage:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>gfortran <span class="op">-</span>shared <span class="op">-</span>o foo<span class="op">.</span><span class="fu">so</span> foo<span class="op">.</span><span class="fu">f90</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Personal Experience:</p>
+<ul>
+<li><p>I learn this language recently when I learnt the history of R.</p></li>
+<li><p>Same as C but I’m bothered to learn it.</p></li>
+</ul></li>
 </ul></li>
 <li>R
 <ul>
+<li>R is actually derived from S, a statistical programming language created by Bell Labs.</li>
 <li>While maybe R isn’t exclusively utilized for computing, it’s a statistical computing language widely embraced in statistical analysis.</li>
-<li>With R, it is so easy to conduct a pure data science like data manipulation and visulizations, thanks to the libraries, such as <em>dplyr</em> and <em>ggplot2</em>, and to integrate “structured” databases with <em>DBI</em> and <em>dbplyr</em>.</li>
+<li>With R, it is so easy to conduct a pure data science like data manipulation and visualizations, thanks to the libraries, such as <em>dplyr</em> and <em>ggplot2</em>, and to integrate “structured” databases with <em>DBI</em> and <em>dbplyr</em>.</li>
+<li>Just like Python, R is an interpreted language.</li>
+<li>To use R and its IDE, RStudio, you need to download them first.
+<ul>
+<li>R: <a href="https://cran.r-project.org/bin/windows/base/" class="uri">https://cran.r-project.org/bin/windows/base/</a></li>
+<li>RStudio: <a href="https://posit.co/download/rstudio-desktop/" class="uri">https://posit.co/download/rstudio-desktop/</a></li>
+</ul></li>
+<li>Personal Experience:
+<ul>
+<li>3 years. Of course, I am a statistics student.</li>
+<li>I started learning this language way back when I was high school student, but started to re-learn this language when I study statistics.</li>
+</ul></li>
 </ul></li>
 <li>Python
 <ul>
 <li>Python is an effective general purpose language that can be even used in statistics or any fields of computing.</li>
+<li>To use Python in R, you need to install Python and <code>reticulate</code> first.
+<ul>
+<li>If you install <a href="https://www.python.org/downloads/">Python</a> in its webpage, configure the path into its system environment variables and then configure it into RStudio (you can find its option in <code>Global Option</code> or simply call <code>py_config</code> and then put the path as its argument.</li>
+<li>If you install Python using <code>install_python</code>, it will automatically create a virtual environment (it is separated to the Python you installed into the System).</li>
+<li>Separately to the system, you can install its conda environment <code>conda_install</code>.</li>
+</ul></li>
+<li>Personal Experience:
+<ul>
+<li>2 years.</li>
+<li>When I study statistics.</li>
+</ul></li>
 </ul></li>
 </ol>
-<p>They are all high level languages (or I should say some of them are close to high level languages) and share similarities. I only used those languages that can be both used in computing and listed in <code>knitr</code>. Also, I wrapped the codes from other languages so that it would be easy for me to benchmark them with <code>bench::time</code>.</p>
+<p>They are all high level languages (or I should say some of them are close to high level languages) and share similarities. To be real, not all the programming languages listed here is what I can write by my own, they are FORTRAN, Rust, and C. Moreover, I only used those languages that can be both used in computing and listed in <code>knitr</code>. Also, I wrapped the codes from other languages so that it would be easy for me to benchmark them with <code>bench::time</code>.</p>
 
 
 </section>

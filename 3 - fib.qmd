@@ -1,4 +1,4 @@
-## Recursive Fibonacci Sequence
+## 3.1 Recursive Fibonacci Sequence
 
 ```{r}
 #| echo: false
@@ -7,11 +7,9 @@
 knitr::knit_engines$set(extendrsrc = rextendr::eng_extendrsrc)
 ```
 
-
 Same procedure as approximating the $\pi$, compile and then compile
 
 ::: {.panel-tabset group="language"}
-
 ### C
 
 ```{c}
@@ -30,7 +28,6 @@ void fib_c(int *n, int *seq) {
 
 ```
 
-
 ```{r}
 fib_c <- function(n) {
   seq <- integer(n + 1)
@@ -38,7 +35,6 @@ fib_c <- function(n) {
 }
 fib_c(10)
 ```
-
 
 ### C++
 
@@ -88,8 +84,6 @@ fib_jl <- JuliaCall::julia_eval("fib_jl")
 fib_jl(10L)
 ```
 
-
-
 ### Rust
 
 ```{extendrsrc}
@@ -129,7 +123,6 @@ fn fib_rs(n: i32) -> Vec<i32> {
 fib_rs(10)
 ```
 
-
 ### FORTRAN
 
 ```{fortran95}
@@ -148,7 +141,6 @@ subroutine fib_f(n, fib)
 end subroutine fib_f
 ```
 
-
 ```{r}
 fib_fortran <- function(n) {
   n <- n + 1
@@ -156,7 +148,6 @@ fib_fortran <- function(n) {
 }
 fib_fortran(10)
 ```
-
 
 ### R
 
@@ -173,7 +164,6 @@ fib_r <- function(n) {
 
 fib_r(10)
 ```
-
 
 ### Python
 
@@ -193,7 +183,6 @@ def fib_p(n):
 fib_py <- reticulate::py$fib_p
 fib_py(10)
 ```
-
 :::
 
 ## Benchmarks
@@ -210,8 +199,3 @@ bench::mark(
   check = F
 )
 ```
-
-
-
-
-

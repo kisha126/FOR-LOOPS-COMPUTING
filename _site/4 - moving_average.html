@@ -181,7 +181,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./2 - pi_approx.html">Approximating Pi</a></li><li class="breadcrumb-item"><a href="./2 - pi_approx.html">2.1 Approximating <span class="math inline">\(\pi\)</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./4 - moving_average.html">Moving Average</a></li><li class="breadcrumb-item"><a href="./4 - moving_average.html">4.1 Moving Average</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -229,7 +229,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./2 - pi_approx.html" class="sidebar-item-text sidebar-link active">
+  <a href="./2 - pi_approx.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">2.1 Approximating <span class="math inline">\(\pi\)</span></span></a>
   </div>
 </li>
@@ -263,7 +263,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./4 - moving_average.html" class="sidebar-item-text sidebar-link">
+  <a href="./4 - moving_average.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">4.1 Moving Average</span></a>
   </div>
 </li>
@@ -313,8 +313,8 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#approximating-pi" id="toc-approximating-pi" class="nav-link active" data-scroll-target="#approximating-pi">2.1 Approximating <span class="math inline">\(\pi\)</span></a></li>
-  <li><a href="#benchmarks" id="toc-benchmarks" class="nav-link" data-scroll-target="#benchmarks">Benchmarks</a></li>
+  <li><a href="#moving-average" id="toc-moving-average" class="nav-link active" data-scroll-target="#moving-average">4.1 Moving Average</a></li>
+  <li><a href="#benchmark" id="toc-benchmark" class="nav-link" data-scroll-target="#benchmark">Benchmark</a></li>
   </ul>
 </nav>
     </div>
@@ -324,253 +324,246 @@ window.Quarto = {
 
 
 
-<section id="approximating-pi" class="level2">
-<h2 class="anchored" data-anchor-id="approximating-pi">2.1 Approximating <span class="math inline">\(\pi\)</span></h2>
-<p>It took hundreds of years to precisely approximate the <span class="math inline">\(\pi\)</span>.</p>
-<p>I used the Leibniz formula to approximate <span class="math inline">\(\pi\)</span>. It came from an alternating series, a power series of <span class="math inline">\(\frac{1}{x^2+1}\)</span>.</p>
-<p>This is how Leibniz formula looks like:</p>
-<p><span class="math display">\[
-\pi=4\sum_{k = 0}^{\infty} {\frac{(-1)^k}{2k + 1}}
-\]</span></p>
-<p>We need to adjust a little bit for the programming languages that starts with index-1, namely R, Julia and FORTRAN.</p>
-<p>This is how Leibniz formula looks like:</p>
-<p><span class="math display">\[
-\pi=4\sum_{k = 1}^{\infty} {\frac{(-1)^k}{2k - 1}}
-\]</span></p>
+<section id="moving-average" class="level2">
+<h2 class="anchored" data-anchor-id="moving-average">4.1 Moving Average</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>zz <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fl">1e4</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="fl">1.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For the languages that are strict to the data types (which in this case, Julia, Rust, and Python), I cannot run their functions if the array argument is not double and the <code>window size</code> argument is not an integer. That’s why, I need to convert the array into <code>double</code> and I need to put <code>L</code> followed from number so that the number becomes strictly <code>integer</code>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset" data-group="language">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">C</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">C++</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Julia</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false">Rust</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false">FORTRAN</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-6" role="tab" aria-controls="tabset-1-6" aria-selected="false">R</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-7-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-7" role="tab" aria-controls="tabset-1-7" aria-selected="false">Python</a></li></ul>
 <div class="tab-content" data-group="language">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p>If your purpose is a language for fast computation within R, C is maybe easier than C++ but in order this to be working and exportable, the inputs and outputs of the computation were stored in the memory address, a.k.a. the pointers.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> pi_approx_c<span class="op">(</span><span class="dt">int</span> <span class="op">*</span>n<span class="op">,</span> <span class="dt">double</span> <span class="op">*</span>result<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">double</span> pi_4 <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">double</span> sign <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="op">*</span>n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    pi_4 <span class="op">+=</span> sign <span class="op">/</span> <span class="op">(</span><span class="dv">2</span> <span class="op">*</span> i <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    sign <span class="op">*=</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="op">*</span>result <span class="op">=</span> <span class="dv">4</span> <span class="op">*</span> pi_4<span class="op">;</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode c code-with-copy"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdlib.h&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> moving_ave_c<span class="op">(</span><span class="dt">double</span> <span class="op">*</span>x<span class="op">,</span> <span class="dt">int</span> <span class="op">*</span>n<span class="op">,</span> <span class="dt">int</span> <span class="op">*</span>window_size<span class="op">,</span> <span class="dt">double</span> <span class="op">*</span>moving_averages<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> result_size <span class="op">=</span> <span class="op">*</span>n <span class="op">-</span> <span class="op">*</span>window_size <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> <span class="op">*</span>paddedX <span class="op">=</span> <span class="op">(</span><span class="dt">double</span> <span class="op">*)</span>malloc<span class="op">(</span>result_size <span class="op">*</span> <span class="kw">sizeof</span><span class="op">(</span><span class="dt">double</span><span class="op">));</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>paddedX <span class="op">==</span> NULL<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        fprintf<span class="op">(</span>stderr<span class="op">,</span> <span class="st">"Memory allocation failed</span><span class="sc">\n</span><span class="st">"</span><span class="op">);</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        free<span class="op">(</span>paddedX<span class="op">);</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span><span class="op">;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> result_size<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        moving_averages<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> j <span class="op">&lt;</span> <span class="op">*</span>window_size<span class="op">;</span> j<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>            moving_averages<span class="op">[</span>i<span class="op">]</span> <span class="op">+=</span> x<span class="op">[</span>i <span class="op">+</span> j<span class="op">];</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        moving_averages<span class="op">[</span>i<span class="op">]</span> <span class="op">/=</span> <span class="op">*</span>window_size<span class="op">;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    free<span class="op">(</span>paddedX<span class="op">);</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In order to wrap the C code into R, use <code>.C</code> and then extract the result via <code>$res</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pi_approx_c <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">.C</span>(<span class="st">"pi_approx_c"</span>, <span class="fu">as.integer</span>(n), <span class="at">res=</span><span class="fu">numeric</span>(<span class="dv">1</span>))<span class="sc">$</span>res</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(res)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">pi_approx_c</span>(<span class="fl">1e5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>moving_ave_c <span class="ot">&lt;-</span> <span class="cf">function</span>(x, window_size) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>     result_size <span class="ot">&lt;-</span> <span class="fu">length</span>(x) <span class="sc">-</span> window_size <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>     moving_averages <span class="ot">&lt;-</span> <span class="fu">double</span>(result_size)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>     moving_averages <span class="ot">&lt;-</span> <span class="fu">.C</span>(<span class="st">"moving_ave_c"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">as.double</span>(x), <span class="fu">as.integer</span>(<span class="fu">length</span>(x)), <span class="fu">as.integer</span>(window_size),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">moving_averages =</span> <span class="fu">double</span>(result_size))<span class="sc">$</span>moving_averages</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>     <span class="fu">return</span>(moving_averages)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">moving_ave_c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 3.141583</code></pre>
+<pre><code>[1] 2 3 4 5 6 7 8 9</code></pre>
 </div>
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<p>Here, the C++ code is way similar to the C code except, we don’t need to use <em>pointers</em> in order share the results in a memory address, instead we only write the C++ code in a standard way. Like I said, using Rcpp, the C++ code is so easy to be exported, as long as we made it to be error-free.</p>
-<p>After compiling, the <code>pi_approx_cpp</code> function will be exported by <code>// [[Rcpp::export]]</code> attributes and saved into R Global Environment directly.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;Rcpp.h&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> Rcpp<span class="op">;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="dt">double</span> pi_approx_cpp<span class="op">(</span><span class="dt">int</span><span class="op">&amp;</span> n<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">double</span> pi_4 <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">double</span> sign <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> n<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    pi_4 <span class="op">+=</span> sign <span class="op">/</span> <span class="op">(</span><span class="dv">2</span> <span class="op">*</span> i <span class="op">+</span> <span class="dv">1</span><span class="op">);</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    sign <span class="op">*=</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="dv">4</span> <span class="op">*</span> pi_4<span class="op">;</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>The C++’s <code>pi_approx_cpp</code> is directly wrapped into R environment without doing an execution to convert the C++ code into binary source code.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pi_approx_cpp</span>(<span class="fl">1e5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 3.141583</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;Rcpp.h&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">using</span> <span class="kw">namespace</span> Rcpp<span class="op">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">// [[Rcpp::export]]</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>NumericVector moving_ave_cpp<span class="op">(</span>NumericVector x<span class="op">,</span> <span class="dt">int</span> window_size<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span> result_size <span class="op">=</span> x<span class="op">.</span>size<span class="op">()</span> <span class="op">-</span> window_size <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  NumericVector moving_averages<span class="op">(</span>result_size<span class="op">);</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> result_size<span class="op">;</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">double</span> sum <span class="op">=</span> <span class="fl">0.0</span><span class="op">;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> j <span class="op">=</span> i<span class="op">;</span> j <span class="op">&lt;</span> i <span class="op">+</span> window_size<span class="op">;</span> j<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>      sum <span class="op">+=</span> x<span class="op">[</span>i <span class="op">+</span> j<span class="op">];</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    moving_averages<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> sum <span class="op">/</span> window_size<span class="op">;</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> moving_averages<span class="op">;</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
-<p>As you can see, we only write few codes, unlike in C/C++, to approximate the <span class="math inline">\(\pi\)</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">pi_approx_jl</span>(n)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    pi_4 <span class="op">=</span> <span class="fl">0.0</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    sign <span class="op">=</span> <span class="fl">1.0</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>n</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        pi_4 <span class="op">+=</span> sign <span class="op">/</span> (<span class="fl">2</span><span class="op">*</span>i <span class="op">-</span> <span class="fl">1</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        sign <span class="op">*=</span> <span class="op">-</span><span class="fl">1</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fl">4</span> <span class="op">*</span> pi_4</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>To prove that the Julia functioncode is executed, you will receive a message “<code>pi_approx_jl (generic function with 1 method)</code>”. And you are now ready to wrap it into R.</p>
-<p>With <em>JuliaCall</em>, you can wrap the Julia function into R via <code>julia_eval</code>. But there are few other ways to call it, but I found <code>julia_eval</code> more convenient.</p>
-<p>(Note: If you are already familiar with <code>reticulate</code>, this is the same as <code>py_eval</code>)</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pi_approx_jl <span class="ot">&lt;-</span> JuliaCall<span class="sc">::</span><span class="fu">julia_eval</span>(<span class="st">"pi_approx_jl"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pi_approx_jl</span>(<span class="fl">1e5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">moving_ave_julia</span>(x<span class="op">::</span><span class="dt">Vector{Float64}</span>, n<span class="op">::</span><span class="dt">Int</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    len <span class="op">=</span> <span class="fu">length</span>(x)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    moving_averages <span class="op">=</span> <span class="fu">Vector</span><span class="dt">{Float64}</span>(<span class="cn">undef</span>, len <span class="op">-</span> n <span class="op">+</span> <span class="fl">1</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>len <span class="op">-</span> n <span class="op">+</span> <span class="fl">1</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        window_sum <span class="op">=</span> <span class="fu">sum</span>(x[i<span class="op">:</span>i<span class="op">+</span>n<span class="op">-</span><span class="fl">1</span>])</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        moving_averages[i] <span class="op">=</span> <span class="fu">round</span>(window_sum <span class="op">/</span> n, digits<span class="op">=</span><span class="fl">2</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> moving_averages</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 3.141583</code></pre>
+<pre><code>moving_ave_julia (generic function with 1 method)</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>moving_ave_jl <span class="ot">&lt;-</span> JuliaCall<span class="sc">::</span><span class="fu">julia_eval</span>(<span class="st">"moving_ave_julia"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">moving_ave_jl</span>(<span class="fu">as.double</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>), <span class="dv">3</span>L)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2 3 4 5 6 7 8 9</code></pre>
 </div>
 </div>
 </div>
 <div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
-<p>Here, we use the <code>extendr</code> and <code>#[extendr]</code> attribute API to write a Rust code and compile it into R, just like we did with Rcpp to compile the C++ code into R</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">extendr_api::prelude::</span><span class="op">*;</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>extendr<span class="at">]</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> pi_approx_rs(n<span class="op">:</span> <span class="dt">i32</span>) <span class="op">-&gt;</span> <span class="dt">f64</span> <span class="op">{</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="kw">mut</span> pi_4 <span class="op">=</span> <span class="dv">0.0</span><span class="op">;</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="kw">mut</span> sign <span class="op">=</span> <span class="dv">1.0</span><span class="op">;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> moving_ave_rs(x<span class="op">:</span> <span class="dt">Vec</span><span class="op">&lt;</span><span class="dt">f64</span><span class="op">&gt;,</span> n<span class="op">:</span> <span class="dt">i32</span>) <span class="op">-&gt;</span> <span class="dt">Vec</span><span class="op">&lt;</span><span class="dt">f64</span><span class="op">&gt;</span> <span class="op">{</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> len <span class="op">=</span> x<span class="op">.</span>len()<span class="op">;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="kw">mut</span> moving_averages <span class="op">=</span> <span class="dt">Vec</span><span class="pp">::</span>with_capacity(len <span class="op">-</span> n <span class="kw">as</span> <span class="dt">usize</span> <span class="op">+</span> <span class="dv">1</span>)<span class="op">;</span></span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="dv">0</span><span class="op">..</span>n <span class="op">{</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        pi_4 <span class="op">+=</span> sign <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> i <span class="op">+</span> <span class="dv">1</span>) <span class="kw">as</span> <span class="dt">f64</span><span class="op">;</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        sign <span class="op">*=</span> <span class="op">-</span><span class="dv">1.0</span><span class="op">;</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="dv">0</span><span class="op">..=</span>len <span class="op">-</span> n <span class="kw">as</span> <span class="dt">usize</span> <span class="op">{</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">let</span> window_sum<span class="op">:</span> <span class="dt">f64</span> <span class="op">=</span> x[i<span class="op">..</span>i <span class="op">+</span> n <span class="kw">as</span> <span class="dt">usize</span>]<span class="op">.</span>iter()<span class="op">.</span>sum()<span class="op">;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        moving_averages<span class="op">.</span>push(window_sum <span class="op">/</span> n <span class="kw">as</span> <span class="dt">f64</span>)<span class="op">;</span></span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="dv">4.0</span> <span class="op">*</span> pi_4</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    moving_averages<span class="op">.</span>iter()<span class="op">.</span>map(<span class="op">|&amp;</span>x<span class="op">|</span> (x <span class="op">*</span> <span class="dv">100.0</span>)<span class="op">.</span>round() <span class="op">/</span> <span class="dv">100.0</span>)<span class="op">.</span>collect()</span>
 <span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>After compiling, just like C++, the <code>pi_approx_rs</code> function in Rust will be wrapped and saved into R Global Environment directly.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pi_approx_rs</span>(<span class="fl">1e5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">moving_ave_rs</span>(<span class="fu">as.double</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>), <span class="dv">3</span>L)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 3.141583</code></pre>
+<pre><code>[1] 2 3 4 5 6 7 8 9</code></pre>
 </div>
 </div>
 </div>
 <div id="tabset-1-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-5-tab">
-<p>Maybe FORTRAN is fast, but the solution is more boilerplate, although for me it is more readable compared to C/C++. Just like C, we need the result to be store in memory address.</p>
-<p>If you use old FORTRAN version, you might need to CAPITALIZE the FORTRAN program. But we use the ’95 version of FORTRAN so we don’t need to CAPITALIZE the program.</p>
-<p>(It is still a code block even if the FORTRAN code is text-based)</p>
 <div class="cell">
-<pre class="fortran95 cell-code"><code>subroutine pi_approx(n, result)
+<pre class="fortran95 cell-code"><code>subroutine moving_ave_f(x, n, window_size, moving_averages)
     implicit none
-    integer, intent(in) :: n
-    real(8), intent(out) :: result
-    integer :: i
-    real(8) :: pi_4, sign
-    
-    pi_4 = 0.0
-    sign = 1.0
-    
-    do i = 1, n
-        pi_4 = pi_4 + sign / (2 * i - 1)
-        sign = sign * (-1.0)
+    integer, intent(in) :: n, window_size
+    double precision, intent(in) :: x(n)
+    double precision, intent(out) :: moving_averages(n - window_size + 1)
+    integer :: i, j
+    double precision :: sum
+
+    do i = 1, n - window_size + 1
+        sum = 0.0d0
+        do j = i, i + window_size - 1
+            sum = sum + x(j)
+        end do
+        moving_averages(i) = sum / window_size
     end do
-    
-    result = 4 * pi_4
-end subroutine pi_approx</code></pre>
+
+end subroutine moving_ave_f</code></pre>
 </div>
-<p>Just like C, but instead, in order to natively call the FORTRAN code into R, use <code>.Fortran</code> to call the binary source code of FORTRAN’s <code>pi_approx</code> and then extract the result via <code>$result</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>pi_approx_fortran <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">.Fortran</span>(<span class="st">"pi_approx"</span>, <span class="fu">as.integer</span>(n), <span class="at">result=</span><span class="fu">double</span>(<span class="dv">1</span>))<span class="sc">$</span>result</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(result)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">pi_approx_fortran</span>(<span class="fl">1e5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>moving_ave_fortran <span class="ot">&lt;-</span> <span class="cf">function</span>(x, window_size) {</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>     result_size <span class="ot">&lt;-</span> <span class="fu">length</span>(x) <span class="sc">-</span> window_size <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>     moving_averages <span class="ot">&lt;-</span> <span class="fu">double</span>(result_size)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>     moving_averages <span class="ot">&lt;-</span> <span class="fu">.Fortran</span>(<span class="st">"moving_ave_f"</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                           <span class="fu">as.double</span>(x), <span class="fu">as.integer</span>(<span class="fu">length</span>(x)), <span class="fu">as.integer</span>(window_size),</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">moving_averages =</span> <span class="fu">double</span>(result_size))<span class="sc">$</span>moving_averages</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>     <span class="fu">return</span>(moving_averages)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="fu">moving_ave_fortran</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 3.141583</code></pre>
+<pre><code>[1] 2 3 4 5 6 7 8 9</code></pre>
 </div>
 </div>
 </div>
 <div id="tabset-1-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-6-tab">
-<p>R is so close to be functional programming and to be Domain Specific Language (or DSL). It is so functional, you need to use <code>&lt;- function()</code> to define a function and I sometimes agree that this is ugly but hey it works! This is just my opinion.</p>
-<p>R is already a default language in RStudio, so the function we define is already callable in R Global Environment.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pi_approx_r <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  pi_4 <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  sign <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n) {</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    pi_4 <span class="ot">&lt;-</span> pi_4 <span class="sc">+</span> sign <span class="sc">/</span> (<span class="dv">2</span><span class="sc">*</span>i <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    sign <span class="ot">&lt;-</span> sign <span class="sc">*</span> <span class="sc">-</span><span class="dv">1</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="dv">4</span> <span class="sc">*</span> pi_4)</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="fu">pi_approx_r</span>(<span class="fl">1e5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>moving_ave_r <span class="ot">&lt;-</span> <span class="cf">function</span>(x, n) {</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    moving_averages <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(x) <span class="sc">-</span> n <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(<span class="fu">length</span>(x) <span class="sc">-</span> n <span class="sc">+</span> <span class="dv">1</span>)) {</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        moving_averages[i] <span class="ot">&lt;-</span> <span class="fu">sum</span>(x[i<span class="sc">:</span>(i <span class="sc">+</span> n <span class="sc">-</span> <span class="dv">1</span>)]) <span class="sc">/</span> n</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">round</span>(moving_averages, <span class="dv">2</span>))</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="fu">moving_ave_r</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 3.141583</code></pre>
+<pre><code>[1] 2 3 4 5 6 7 8 9</code></pre>
 </div>
 </div>
 </div>
 <div id="tabset-1-7" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-7-tab">
-<p>R and Python has so much similarities, except Python is more onto general purpose language.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pi_approx_py(n):</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">int</span>(n)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    pi_4 <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    sign <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>        pi_4 <span class="op">+=</span> sign <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> i <span class="op">+</span> <span class="dv">1</span>)</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>        sign <span class="op">*=</span> <span class="op">-</span><span class="dv">1</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pi_4 <span class="op">*</span> <span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> moving_ave_py(arr, window_size):</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize an empty list to store moving averages</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    moving_averages <span class="op">=</span> []</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Loop through the array to consider</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># every window of size 'window_size'</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> i <span class="op">&lt;</span> <span class="bu">len</span>(arr) <span class="op">-</span> window_size <span class="op">+</span> <span class="dv">1</span>:</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Store elements from i to i+window_size</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># in list to get the current window</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>        window <span class="op">=</span> arr[i : i <span class="op">+</span> window_size]</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calculate the average of the current window</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>        window_average <span class="op">=</span> <span class="bu">round</span>(<span class="bu">sum</span>(window) <span class="op">/</span> window_size, <span class="dv">2</span>)</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Store the average of the current window in the moving average list</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>        moving_averages.append(window_average)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Shift the window to the right by one position</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>        i <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> moving_averages</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The defined function in Python is also callable. Using <code>py</code> module in <code>reticulate</code> package, you can easily interact with any Python objects in Python module.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>pi_approx_py <span class="ot">&lt;-</span> reticulate<span class="sc">::</span>py<span class="sc">$</span>pi_approx_py</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pi_approx_py</span>(<span class="fl">1e5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>moving_ave_py <span class="ot">&lt;-</span> reticulate<span class="sc">::</span><span class="fu">py_eval</span>(<span class="st">"moving_ave_py"</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">moving_ave_py</span>(<span class="fu">as.double</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>), <span class="dv">3</span>L)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 3.141583</code></pre>
+<pre><code>[1] 2 3 4 5 6 7 8 9</code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section id="benchmarks" class="level2">
-<h2 class="anchored" data-anchor-id="benchmarks">Benchmarks</h2>
-<p>The benchmarks are the same when I capture the date and time, similar to <code>Sys.time</code> in R. For example, when I run the Python code for <span class="math inline">\(\pi\)</span> approximation (same code as example) and benchmark it with <code>time</code> module for the first time, I got a difference of 17 seconds. Plus, the <code>mark</code> function from <code>bench</code> package is so precise that I use this package everytime when I benchmark the codes.</p>
+<section id="benchmark" class="level2">
+<h2 class="anchored" data-anchor-id="benchmark">Benchmark</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>pi_approx_bm <span class="ot">&lt;-</span> bench<span class="sc">::</span><span class="fu">mark</span>(</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">C =</span> <span class="fu">pi_approx_c</span>(<span class="fl">1e8</span>),</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">C++</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">pi_approx_cpp</span>(<span class="fl">1e8</span>),</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Julia =</span> <span class="fu">pi_approx_jl</span>(<span class="fl">1e8</span>),</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Rust =</span> <span class="fu">pi_approx_rs</span>(<span class="fl">1e8</span>),</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">FORTRAN =</span> <span class="fu">pi_approx_fortran</span>(<span class="fl">1e8</span>),</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">R =</span> <span class="fu">pi_approx_r</span>(<span class="fl">1e8</span>),</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Python =</span> <span class="fu">pi_approx_py</span>(<span class="fl">1e8</span>),</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">check =</span> F</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>pi_approx_bm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>bench<span class="sc">::</span><span class="fu">mark</span>(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">C =</span> <span class="fu">moving_ave_c</span>(zz, <span class="dv">10</span>),</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">C++</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">moving_ave_cpp</span>(zz, <span class="dv">10</span>),</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">Julia =</span> <span class="fu">moving_ave_jl</span>(zz, <span class="dv">10</span>L),</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Rust =</span> <span class="fu">moving_ave_rs</span>(zz, <span class="dv">10</span>L),</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">FORTRAN =</span> <span class="fu">moving_ave_fortran</span>(zz, <span class="dv">10</span>),</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">R =</span> <span class="fu">moving_ave_r</span>(zz, <span class="dv">10</span>),</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">Python =</span> <span class="fu">moving_ave_py</span>(zz, <span class="dv">10</span>L),</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">check =</span> F</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 6
   expression      min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 C          146.93ms 150.45ms    6.67     16.46KB        0
-2 C++        147.69ms 149.73ms    6.69      7.67KB        0
-3 Julia      395.36ms 395.94ms    2.53      5.73KB        0
-4 Rust          1.08s    1.08s    0.924      4.8KB        0
-5 FORTRAN    147.54ms 150.55ms    6.68     16.46KB        0
-6 R             7.83s    7.83s    0.128         0B        0
-7 Python       15.48s   15.48s    0.0646    4.98KB        0</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>pi_approx_bm <span class="sc">|&gt;</span> <span class="fu">plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required namespace: tidyr</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="2---pi_approx_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+1 C           140.8µs  354.2µs    2786.    351.1KB    23.5 
+2 C++         101.9µs  158.1µs    6124.     80.6KB    15.3 
+3 Julia        1.27ms   1.43ms     658.     83.8KB     2.03
+4 Rust         1.88ms   1.98ms     502.       83KB     0   
+5 FORTRAN     110.6µs  329.3µs    3047.    351.1KB    28.9 
+6 R            7.06ms   7.46ms     128.    156.2KB    19.7 
+7 Python      11.69ms  12.17ms      79.5    83.1KB     0   </code></pre>
 </div>
 </div>
-</div>
-<p>From this result, we can say that the C++ is the fastest language among the 7 languages I selected for computing in using <code>for</code> loops, following with C and FORTRAN.</p>
 
 
 </section>

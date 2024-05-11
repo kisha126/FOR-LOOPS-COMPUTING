@@ -1,0 +1,283 @@
+## 5.1 Convolution
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+knitr::knit_engines$set(extendrsrc = rextendr::eng_extendrsrc)
+```
+
+I have 2 types of data here, one being used as an example if they are actually equal or the function is working. While the other one is used for benchmarking.
+
+```{r}
+# To elaborate an example
+set.seed(120)
+x <- rnorm(10, mean = 10, sd = 2)
+y <- rexp(10, rate = 1.5)
+
+# For Benchmarking
+set.seed(120)
+xx <- rnorm(5e3, mean = 10, sd = 2)
+yy <- rexp(5e3, rate = 1.5)
+```
+
+::: {.panel-tabset group="language"}
+
+### C
+
+```{c, results='hide', warning=FALSE, message=FALSE}
+#include <stdio.h>
+#include <stdlib.h>
+
+void convolve_c(double *x, double *y, int *n, int *m, double *result) {
+    int result_size = *n + *m - 1;
+
+    for (int i = 0; i < result_size; i++) {
+        int j_min = (i >= *m - 1) ? i - (*m - 1) : 0;
+        int j_max = (i < *n - 1) ? i : *n - 1;
+
+        result[i] = 0;
+        for (int j = j_min; j <= j_max; j++) {
+            result[i] += x[j] * y[i - j];
+        }
+    }
+}
+
+```
+
+```{r}
+convolve_c <- function(x, y) {
+    totalSize <- length(x) + length(y) - 1
+    result <- double(totalSize)  # Initialize result vector
+    result <- .C("convolve_c", 
+                 as.double(x), as.double(y), 
+                 as.integer(length(x)), as.integer(length(y)),
+                 result=double(totalSize))$result
+    return(result)
+}
+
+convolve_c(x, y) |> head(10)
+```
+
+
+
+### C++
+
+
+```{Rcpp}
+#include <Rcpp.h>
+using namespace Rcpp;
+
+// [[Rcpp::export]]
+NumericVector convolve_cpp(NumericVector x, NumericVector y) {
+    int n = x.size();
+    int m = y.size();
+    int result_size = n + m - 1;
+    NumericVector result(result_size);
+
+    for (int i = 0; i < result_size; i++) {
+        int j_min = (i >= m - 1) ? i - (m - 1) : 0;
+        int j_max = (i < n - 1) ? i : n - 1;
+        double sum = 0.0;
+        // Unroll the inner loop for better performance
+        for (int j = j_min; j <= j_max - 4; j += 4) {
+            sum += x[j] * y[i - j] +
+                   x[j + 1] * y[i - (j + 1)] +
+                   x[j + 2] * y[i - (j + 2)] +
+                   x[j + 3] * y[i - (j + 3)];
+        }
+        // Handle remaining elements if any
+        for (int j = j_max - (j_max - j_min) % 4; j <= j_max; j++) {
+            sum += x[j] * y[i - j];
+        }
+        result[i] = sum;
+    }
+
+    return result;
+}
+
+```
+
+
+```{r}
+convolve_cpp(x, y) |> head(10)
+```
+
+
+### Julia
+
+```{julia}
+function convolve_vector(x::Vector{Float64}, y::Vector{Float64})
+    n = length(x)
+    m = length(y)
+    result = zeros(Float64, n + m - 1)
+    paddedX = zeros(Float64, n + m - 1)
+    paddedY = zeros(Float64, n + m - 1)
+
+    paddedX[1:n] = x
+    paddedY[1:m] = y
+
+    for i in 1:(n + m - 1)
+        for j in 1:i
+            result[i] += paddedX[j] * paddedY[i - j + 1]
+        end
+    end
+
+    return result
+end
+
+```
+
+```{r}
+convolve_jl <- JuliaCall::julia_eval("convolve_vector")
+convolve_jl(x, y) |> head(10)
+```
+
+
+### Rust
+
+```{extendrsrc}
+use extendr_api::prelude::*;
+
+#[extendr]
+fn convolve_rs(x: Vec<f64>, y: Vec<f64>) -> Vec<f64> {
+    let n = x.len();
+    let m = y.len();
+    let result_size = n + m - 1;
+    let mut result = vec![0.0; result_size];
+
+    for i in 0..result_size {
+        let j_min = if i >= m - 1 { i - (m - 1) } else { 0 };
+        let j_max = if i < n - 1 { i } else { n - 1 };
+        for j in j_min..=j_max {
+            result[i] += x[j] * y[i - j];
+        }
+    }
+
+    result
+}
+
+```
+
+
+```{r}
+convolve_rs(x, y) |> head(10)
+```
+
+
+### FORTRAN
+
+```{fortran95, results='hide', warning=FALSE, message=FALSE}
+subroutine convolve_fortran(x, n, y, m, result)
+    implicit none
+    integer, intent(in) :: n, m
+    real(8), intent(in) :: x(n), y(m)
+    real(8), intent(out) :: result(n + m - 1)
+    real(8) :: paddedX(n + m - 1), paddedY(n + m - 1)
+    integer :: i, j
+
+    ! Initialize paddedX and paddedY with zeros
+    paddedX = 0.0d0
+    paddedY = 0.0d0
+
+    ! Copy elements of x and y to paddedX and paddedY, respectively
+    paddedX(1:n) = x
+    paddedY(1:m) = y
+
+    ! Compute convolution
+    do i = 1, n + m - 1
+        do j = 1, i
+            result(i) = result(i) + paddedX(j) * paddedY(i - j + 1)
+        end do
+    end do
+end subroutine convolve_fortran
+```
+
+
+```{r}
+convolve_fortran <- function(x, y) {
+  totalSize <- length(x) + length(y) - 1
+  result <- .Fortran("convolve_fortran", 
+                     as.double(x), as.integer(length(x)), 
+                     as.double(y), as.integer(length(y)),
+                     result=double(totalSize))$result
+  return(result)
+}
+
+convolve_fortran(x, y) |> head(10)
+```
+
+
+### R
+
+```{r}
+convolve_r <- function(x, y) {
+    n <- length(x)
+    m <- length(y)
+    result <- rep(0, n + m - 1)
+    paddedX <- rep(0, n + m - 1)
+    paddedY <- rep(0, n + m - 1)
+    
+    paddedX[1:n] <- x
+    paddedY[1:m] <- y
+    
+    for (i in 1:(n + m - 1)) {
+        for (j in 1:i) {
+            result[i] <- result[i] + paddedX[j] * paddedY[i - j + 1]
+        }
+    }
+    
+    return(result)
+}
+
+convolve_rs(x, y) |> head(10)
+```
+
+### Python
+
+```{python}
+import numpy as np
+
+def convolve_py(x, y):
+    n = len(x)
+    m = len(y)
+    result = np.zeros(n + m - 1)
+    paddedX = np.zeros(n + m - 1)
+    paddedY = np.zeros(n + m - 1)
+    
+    paddedX[:n] = x
+    paddedY[:m] = y
+    
+    for i in range(1, n + m):
+        for j in range(1, i+1):
+            result[i-1] += paddedX[j-1] * paddedY[i-j]
+    
+    return result
+
+```
+
+
+```{r}
+convolve_py <- reticulate::py_eval("convolve_py")
+convolve_py(x, y) |> head(10)
+```
+
+::: 
+
+## Benchmark
+
+
+```{r}
+bench::mark(
+     C = convolve_c(xx, yy),
+     `C++` = convolve_cpp(xx, yy),
+     Julia = convolve_jl(xx, yy),
+     Rust = convolve_rs(xx, yy),
+     FORTRAN = convolve_fortran(xx, yy),
+     R = convolve_r(xx, yy),
+     Python = convolve_py(xx, yy),
+     check = F
+)
+```
+
+
