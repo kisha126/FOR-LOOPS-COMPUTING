@@ -3,8 +3,6 @@ title: "Comparison of `for` loops from various programming languages"
 output: github_document
 ---
 
-
-
 **(Page under construction)**
 
 ```{r, include = FALSE}
@@ -16,12 +14,8 @@ knitr::opts_chunk$set(
 
 This documentation is to show you how to integrate other languages and leverage their strength in computations into R.
 
-
 Links (Still under construction):
 
-Quarto Pub: https://whyher12.quarto.pub/for-loops-archive/
+Quarto Pub: <https://whyher12.quarto.pub/for-loops-computing/>
 
-GitHub Pages: https://kishinsagume12.github.io/FOR-LOOPS-COMPUTING/
-
-
-
+GitHub Pages: <https://kishinsagume12.github.io/FOR-LOOPS-COMPUTING/>
