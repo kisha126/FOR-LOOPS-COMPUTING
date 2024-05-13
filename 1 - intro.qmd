@@ -86,8 +86,14 @@ Here are the list of languages will be used in this document:
 7.  Python
     -   Python is an effective general purpose language that can be even used in statistics or any fields of computing.
     -   To use Python in R, you need to install Python and `reticulate` first.
-        -   If you install [Python](https://www.python.org/downloads/) in its webpage, configure the path into its system environment variables and then configure it into RStudio (you can find its option in `Global Option` or simply call `py_config` and then put the path as its argument.
+        -   If you install [Python](https://www.python.org/downloads/) from its webpage, configure the path into its system environment variables and then configure it into RStudio and simply call `py_config` and then put the path as its argument (you can configure it in `Global Option`, and then select ***Python*** and select the path according to what system detects for its interpreter).
+
+            [![Source: RStudio User Guide](python-config.jpg)](https://docs.posit.co/ide/user/ide/guide/environments/py/images/python-versions.png)
+
+            [![Source: RStudio User Guide](python-interpreter.png)](https://docs.posit.co/ide/user/ide/guide/environments/py/images/python-interpreter.png))
+
         -   If you install Python using `install_python`, it will automatically create a virtual environment (it is separated to the Python you installed into the System).
+
         -   Separately to the system, you can install its conda environment `conda_install`.
     -   Personal Experience:
         -   2 years.

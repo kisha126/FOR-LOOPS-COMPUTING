@@ -411,9 +411,16 @@ window.Quarto = {
 <li>Python is an effective general purpose language that can be even used in statistics or any fields of computing.</li>
 <li>To use Python in R, you need to install Python and <code>reticulate</code> first.
 <ul>
-<li>If you install <a href="https://www.python.org/downloads/">Python</a> in its webpage, configure the path into its system environment variables and then configure it into RStudio (you can find its option in <code>Global Option</code> or simply call <code>py_config</code> and then put the path as its argument.</li>
-<li>If you install Python using <code>install_python</code>, it will automatically create a virtual environment (it is separated to the Python you installed into the System).</li>
-<li>Separately to the system, you can install its conda environment <code>conda_install</code>.</li>
+<li><p>If you install <a href="https://www.python.org/downloads/">Python</a> from its webpage, configure the path into its system environment variables and then configure it into RStudio and simply call <code>py_config</code> and then put the path as its argument (you can configure it in <code>Global Option</code>, and then select <strong><em>Python</em></strong> and select the path according to what system detects for its interpreter).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://docs.posit.co/ide/user/ide/guide/environments/py/images/python-versions.png"><img src="python-config.jpg" class="img-fluid figure-img" alt="Source: RStudio User Guide"></a></p>
+<figcaption>Source: RStudio User Guide</figcaption>
+</figure>
+</div>
+<p><a href="https://docs.posit.co/ide/user/ide/guide/environments/py/images/python-interpreter.png"><img src="python-interpreter.png" class="img-fluid" alt="Source: RStudio User Guide"></a>)</p></li>
+<li><p>If you install Python using <code>install_python</code>, it will automatically create a virtual environment (it is separated to the Python you installed into the System).</p></li>
+<li><p>Separately to the system, you can install its conda environment <code>conda_install</code>.</p></li>
 </ul></li>
 <li>Personal Experience:
 <ul>

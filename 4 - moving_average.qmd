@@ -20,7 +20,7 @@ For the languages that are strict to the data types (which in this case, Julia, 
 
 ### C
 
-```{c, results='hide', warning=FALSE, message=FALSE}
+```{c ma-c, results='hide', warning=FALSE, message=FALSE}
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -62,7 +62,7 @@ moving_ave_c(1:10, 3)
 
 ### C++
 
-```{Rcpp}
+```{Rcpp ma-cpp}
 #include <Rcpp.h>
 using namespace Rcpp;
 
@@ -86,7 +86,7 @@ NumericVector moving_ave_cpp(NumericVector x, int window_size) {
 
 ### Julia
 
-```{julia}
+```{julia ma-jl}
 function moving_ave_julia(x::Vector{Float64}, n::Int)
     len = length(x)
     moving_averages = Vector{Float64}(undef, len - n + 1)
@@ -109,7 +109,7 @@ moving_ave_jl(as.double(1:10), 3L)
 
 ### Rust
 
-```{extendrsrc}
+```{extendrsrc ma-rs}
 use extendr_api::prelude::*;
 
 #[extendr]
@@ -135,7 +135,7 @@ moving_ave_rs(as.double(1:10), 3L)
 
 ### FORTRAN
 
-```{fortran95, results='hide', warning=FALSE, message=FALSE}
+```{fortran95 ma-f95, results='hide', warning=FALSE, message=FALSE}
 subroutine moving_ave_f(x, n, window_size, moving_averages)
     implicit none
     integer, intent(in) :: n, window_size
@@ -171,7 +171,7 @@ moving_ave_fortran(1:10, 3)
 
 ### R
 
-```{r}
+```{r ma-r}
 moving_ave_r <- function(x, n) {
     moving_averages <- numeric(length(x) - n + 1)
     
@@ -188,7 +188,7 @@ moving_ave_r(1:10, 3)
 
 ### Python
 
-```{python}
+```{python ma-py}
 def moving_ave_py(arr, window_size):
     i = 0
     # Initialize an empty list to store moving averages
@@ -217,7 +217,7 @@ def moving_ave_py(arr, window_size):
 ```
 
 ```{r}
-moving_ave_py <- reticulate::py_eval("moving_ave_py")
+moving_ave_py <- reticulate::py$moving_ave_py
 moving_ave_py(as.double(1:10), 3L)
 ```
 

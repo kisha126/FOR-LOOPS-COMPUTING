@@ -25,7 +25,7 @@ yy <- rexp(5e3, rate = 1.5)
 
 ### C
 
-```{c, results='hide', warning=FALSE, message=FALSE}
+```{c conv-c, results='hide', warning=FALSE, message=FALSE}
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -64,7 +64,7 @@ convolve_c(x, y) |> head(10)
 ### C++
 
 
-```{Rcpp}
+```{Rcpp `conv-c++`}
 #include <Rcpp.h>
 using namespace Rcpp;
 
@@ -106,7 +106,7 @@ convolve_cpp(x, y) |> head(10)
 
 ### Julia
 
-```{julia}
+```{julia conv-jl}
 function convolve_vector(x::Vector{Float64}, y::Vector{Float64})
     n = length(x)
     m = length(y)
@@ -136,7 +136,7 @@ convolve_jl(x, y) |> head(10)
 
 ### Rust
 
-```{extendrsrc}
+```{extendrsrc conv-rs}
 use extendr_api::prelude::*;
 
 #[extendr]
@@ -167,7 +167,7 @@ convolve_rs(x, y) |> head(10)
 
 ### FORTRAN
 
-```{fortran95, results='hide', warning=FALSE, message=FALSE}
+```{fortran95 conv-f95, results='hide', warning=FALSE, message=FALSE}
 subroutine convolve_fortran(x, n, y, m, result)
     implicit none
     integer, intent(in) :: n, m
@@ -210,7 +210,7 @@ convolve_fortran(x, y) |> head(10)
 
 ### R
 
-```{r}
+```{r conv-r}
 convolve_r <- function(x, y) {
     n <- length(x)
     m <- length(y)
@@ -235,7 +235,7 @@ convolve_rs(x, y) |> head(10)
 
 ### Python
 
-```{python}
+```{python conv-py}
 import numpy as np
 
 def convolve_py(x, y):
@@ -258,7 +258,7 @@ def convolve_py(x, y):
 
 
 ```{r}
-convolve_py <- reticulate::py_eval("convolve_py")
+convolve_py <- reticulate::py$convolve_py
 convolve_py(x, y) |> head(10)
 ```
 

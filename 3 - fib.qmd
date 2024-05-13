@@ -12,7 +12,7 @@ Same procedure as approximating the $\pi$, compile and then compile
 ::: {.panel-tabset group="language"}
 ### C
 
-```{c}
+```{c fib-c}
 #include <R.h>
 #include <Rinternals.h>
 
@@ -38,7 +38,7 @@ fib_c(10)
 
 ### C++
 
-```{Rcpp}
+```{Rcpp fib-cpp}
 #include <Rcpp.h>
 using namespace Rcpp;
 
@@ -64,7 +64,7 @@ fib_cpp(10)
 
 ### Julia
 
-```{julia}
+```{julia fib-jl}
 function fib_jl(n::Int)
   fib = Int[]
   push!(fib, 0)  
@@ -86,7 +86,7 @@ fib_jl(10L)
 
 ### Rust
 
-```{extendrsrc}
+```{extendrsrc fib-rs}
 use extendr_api::prelude::*;
 use std::collections::HashMap;
 
@@ -125,7 +125,7 @@ fib_rs(10)
 
 ### FORTRAN
 
-```{fortran95}
+```{fortran95 fib-f95}
 subroutine fib_f(n, fib)
     integer, intent(in) :: n
     integer, intent(out) :: fib(n)
@@ -151,7 +151,7 @@ fib_fortran(10)
 
 ### R
 
-```{r}
+```{r fib-r}
 fib_r <- function(n) {
   fib <- integer(n + 1)
   fib[1] <- 0
@@ -167,7 +167,7 @@ fib_r(10)
 
 ### Python
 
-```{python}
+```{python fib-py}
 def fib_p(n):
     n = int(n)
     fib_seq = [0, 1]

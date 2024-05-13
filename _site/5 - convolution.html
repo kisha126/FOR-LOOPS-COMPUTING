@@ -574,7 +574,7 @@ end subroutine convolve_fortran</code></pre>
 <span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>convolve_py <span class="ot">&lt;-</span> reticulate<span class="sc">::</span><span class="fu">py_eval</span>(<span class="st">"convolve_py"</span>)</span>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>convolve_py <span class="ot">&lt;-</span> reticulate<span class="sc">::</span>py<span class="sc">$</span>convolve_py</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">convolve_py</span>(x, y) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1]  1.866342 10.531917 12.357334 14.054101 34.520841 39.345087 41.662725
@@ -602,13 +602,13 @@ end subroutine convolve_fortran</code></pre>
 <pre><code># A tibble: 7 × 6
   expression      min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 C           38.51ms   39.6ms   22.9      358.9KB        0
-2 C++         11.75ms  12.27ms   77.3       85.8KB        0
-3 Julia       73.35ms  75.88ms   12.9       83.9KB        0
-4 Rust          1.05s    1.05s    0.955     78.2KB        0
-5 FORTRAN     71.83ms  72.28ms   13.8        274KB        0
-6 R             7.09s    7.09s    0.141    363.6KB        0
-7 Python       30.89s   30.89s    0.0324   206.2KB        0</code></pre>
+1 C            40.5ms   50.6ms   20.9      358.9KB        0
+2 C++          12.3ms   16.2ms   63.4       85.8KB        0
+3 Julia        76.9ms   77.7ms   12.2       83.9KB        0
+4 Rust           1.2s     1.2s    0.830     78.2KB        0
+5 FORTRAN      75.9ms   77.2ms   12.8        274KB        0
+6 R             10.8s    10.8s    0.0928   363.6KB        0
+7 Python        46.1s    46.1s    0.0217   206.2KB        0</code></pre>
 </div>
 </div>
 

@@ -550,13 +550,13 @@ end subroutine pi_approx</code></pre>
 <pre><code># A tibble: 7 × 6
   expression      min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 C          146.93ms 150.45ms    6.67     16.46KB        0
-2 C++        147.69ms 149.73ms    6.69      7.67KB        0
-3 Julia      395.36ms 395.94ms    2.53      5.73KB        0
-4 Rust          1.08s    1.08s    0.924      4.8KB        0
-5 FORTRAN    147.54ms 150.55ms    6.68     16.46KB        0
-6 R             7.83s    7.83s    0.128         0B        0
-7 Python       15.48s   15.48s    0.0646    4.98KB        0</code></pre>
+1 C          153.19ms 158.88ms    6.31     16.46KB        0
+2 C++         150.8ms 156.85ms    6.39      7.67KB        0
+3 Julia      415.62ms 423.33ms    2.36      5.73KB        0
+4 Rust          1.23s    1.23s    0.815      4.8KB        0
+5 FORTRAN    156.47ms 157.71ms    6.33     16.46KB        0
+6 R            11.64s   11.64s    0.0859        0B        0
+7 Python       22.34s   22.34s    0.0448    4.98KB        0</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>pi_approx_bm <span class="sc">|&gt;</span> <span class="fu">plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
