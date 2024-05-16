@@ -335,6 +335,8 @@ window.Quarto = {
 <li><p>In order to compile C in R, you need to convert the C code into a binary source code and then you can call it using <code>.C</code>.</p></li>
 <li><p>Usage:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gcc <span class="op">-</span>shared <span class="op">-</span>o foo<span class="op">.</span><span class="fu">so</span> foo<span class="op">.</span><span class="fu">c</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>This is more easier:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">R</span> CMD SHLIB foo<span class="op">.</span><span class="fu">c</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p>Personal Experience:</p>
 <ul>
 <li>a year</li>
@@ -351,7 +353,7 @@ window.Quarto = {
 <ul>
 <li>A year.</li>
 <li>With <code>Rcpp</code>, it became easy for me to learn this language but C++ is still hard for me.</li>
-<li>I am still insecure to use this language at all.</li>
+<li>I am still rusty to write a code from this language at all.</li>
 </ul></li>
 </ul></li>
 <li>Julia
@@ -371,7 +373,7 @@ window.Quarto = {
 <li><p>Preparing to compile Rust code in R involves installing necessary package (i.e.&nbsp;<code>extendr/rextendr</code>), <a href="https://visualstudio.microsoft.com/visual-cpp-build-tools/"><code>Build Tools</code></a> and <a href="https://www.rust-lang.org/tools/install?platform_override=win"><code>rustc</code></a> and then install the cargo via the terminal.</p></li>
 <li><p>Personal Experience:</p>
 <ul>
-<li><p>Since December 2023. If I remember it correctly, I was amazed by this language because of <code>Polars</code>.</p></li>
+<li><p>Since December 2023. If I remember it correctly, I was amazed by this language because of <code>Polars</code> library.</p></li>
 <li><p>I need to master R, Python, and C++ first, and then I won’t bother myself learn this language.</p></li>
 <li><p>Installation is such a pain. If you ignore it, using Rust is such an amazing experience.</p></li>
 </ul></li>
@@ -382,7 +384,9 @@ window.Quarto = {
 <li><p>It’s still widely used as <em>source</em> code for R packages, <em>fAsianOptions</em> as its example.</p></li>
 <li><p>Just like C, in order to compile FORTRAN in R, you need to convert the FORTRAN code into a binary source code and then you can call it using <code>.Fortran</code>.</p></li>
 <li><p>Usage:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode powershell code-with-copy"><code class="sourceCode powershell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>gfortran <span class="op">-</span>shared <span class="op">-</span>o foo<span class="op">.</span><span class="fu">so</span> foo<span class="op">.</span><span class="fu">f90</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gfortran</span> <span class="at">-shared</span> <span class="at">-o</span> bar.so bar.f95</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Just as C, this is more easier:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">R</span> CMD SHLIB bar.f95</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p>Personal Experience:</p>
 <ul>
 <li><p>I learn this language recently when I learnt the history of R.</p></li>
@@ -429,7 +433,8 @@ window.Quarto = {
 </ul></li>
 </ul></li>
 </ol>
-<p>They are all high level languages (or I should say some of them are close to high level languages) and share similarities. To be real, not all the programming languages listed here is what I can write by my own, they are FORTRAN, Rust, and C. Moreover, I only used those languages that can be both used in computing and listed in <code>knitr</code>. Also, I wrapped the codes from other languages so that it would be easy for me to benchmark them with <code>bench::time</code>.</p>
+<p>They are all high level languages (or I should say some of them are close to high level languages) and share similarities. To be real, not all the programming languages listed here is what I can write by my own, they are FORTRAN, Rust, and C. Moreover, I only used those languages that can be both used in computing and listed in <code>knitr</code>. Also, you can wrap the functions from other languages and this is what I do so that it would be easy for me to benchmark them with <code>bench::time</code>.</p>
+<p>The snippet were explained by comment blocks (#) in the code blocks.</p>
 
 
 </section>

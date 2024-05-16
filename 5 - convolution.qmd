@@ -230,7 +230,7 @@ convolve_r <- function(x, y) {
     return(result)
 }
 
-convolve_rs(x, y) |> head(10)
+convolve_r(x, y) |> head(10)
 ```
 
 ### Python
