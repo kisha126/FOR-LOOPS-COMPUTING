@@ -1,5 +1,5 @@
 ---
-title: "Comparison of `for` loops from various programming languages"
+title: "Strengths of computational programming languages that can be used in R: Comparison"
 format:
   html:
     embed-resources: true
@@ -16,9 +16,9 @@ names(knitr::knit_engines$get())
 
 ## Introduction
 
-In this document, I will show you the programming languages that can be used in computing with the use of `for` loops and how to wrap them into R. And also, I will share you my experiences of using these languages.
+In this document, I will show you how to wrap and interpret the programming of the programming languages into R and how they can be used in computing then evaluate them into R. And also, I will share you my experiences of using these languages.
 
-Note that not all the programming languages are listed and used in this documents. The programming languages listed and used in this document  are all the programming languages I know where you can write a code within it, integrate, and call them into R.
+Note that not all the programming languages are listed and used in this documents. The programming languages listed and used in this document are all the programming languages I know where you can write a code within them, as well as to integrate, and call them into R.
 
 This document is written in Quarto Website.
 
