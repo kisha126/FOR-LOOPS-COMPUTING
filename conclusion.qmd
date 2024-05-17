@@ -18,5 +18,5 @@ The remarks that I am sure for this example:
 So here's my take:
 
 -   Surely that C++ code is only code that can make R code faster. Among the lower languages (C, C++, FORTRAN, Rust), C++, with Rcpp, is the easiest language to compile, but you will be bothered to need to write a boilerplate C++ code in order to work.
--   C/FORTRAN code makes the solution the more boilerplate. In fact, what you saw in C and FORTRAN codes are called "*subroutine*". My experience is that for C, you need to use pointers or S expressions (SEXP) in order to be callable.
+-   C/FORTRAN code makes the solution the more boilerplate. In fact, what you saw in C and FORTRAN codes are called "*subroutines*". My experience is that for C, you need to use pointers or S expressions (SEXP) in order to be callable.
 -   Use vectorized operations or parallel computing to make the code more faster.
