@@ -4,14 +4,14 @@
     "href": "index.html",
     "title": "Strengths of computational programming languages that can be used in R: Comparison",
     "section": "",
-    "text": "In this document, I will show you how to wrap and interpret the programming of the programming languages into R and how they can be used in computing then evaluate them into R. And also, I will share you my experiences of using these languages.\nNote that not all the programming languages are listed and used in this documents. The programming languages listed and used in this document are all the programming languages I know where you can write a code within them, as well as to integrate, and call them into R.\nThis document is written in Quarto Website.\n(Still under construction)"
+    "text": "In this document (or I should say my “article”), I will show you how to wrap and interpret the programming languages into R and how they can be used in computing, and then evaluate them into R. And also, I will share you my experiences of using these languages.\nNote that not all programming languages are listed and used in this “article”. For example: SQL, I mean for me, who would have thought to use SQL in computing? Some people thought SQL is considered as programming language but for me it’s not.\nThe programming languages listed and used in this “article” are all the programming languages I know where you can write a code within them, as well as to integrate its API, and call them into R.\nBy the way, this “article” is written in Quarto Website.\n(Still under construction)"
   },
   {
     "objectID": "index.html#introduction",
     "href": "index.html#introduction",
     "title": "Strengths of computational programming languages that can be used in R: Comparison",
     "section": "",
-    "text": "In this document, I will show you how to wrap and interpret the programming of the programming languages into R and how they can be used in computing then evaluate them into R. And also, I will share you my experiences of using these languages.\nNote that not all the programming languages are listed and used in this documents. The programming languages listed and used in this document are all the programming languages I know where you can write a code within them, as well as to integrate, and call them into R.\nThis document is written in Quarto Website.\n(Still under construction)"
+    "text": "In this document (or I should say my “article”), I will show you how to wrap and interpret the programming languages into R and how they can be used in computing, and then evaluate them into R. And also, I will share you my experiences of using these languages.\nNote that not all programming languages are listed and used in this “article”. For example: SQL, I mean for me, who would have thought to use SQL in computing? Some people thought SQL is considered as programming language but for me it’s not.\nThe programming languages listed and used in this “article” are all the programming languages I know where you can write a code within them, as well as to integrate its API, and call them into R.\nBy the way, this “article” is written in Quarto Website.\n(Still under construction)"
   },
   {
     "objectID": "5 - convolution.html",

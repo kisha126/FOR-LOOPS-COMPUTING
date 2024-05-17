@@ -47,5 +47,5 @@ format:
     toc_float: true
     css: styles.css
 
-editor: visual
+editor: source
 

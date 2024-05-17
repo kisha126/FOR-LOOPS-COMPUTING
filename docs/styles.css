@@ -3,3 +3,7 @@
   color: green;
   background-color: black;
 }
+
+.justify {
+  text-align: justify !important
+}

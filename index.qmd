@@ -16,12 +16,12 @@ names(knitr::knit_engines$get())
 
 ## Introduction
 
-In this document, I will show you how to wrap and interpret the programming of the programming languages into R and how they can be used in computing then evaluate them into R. And also, I will share you my experiences of using these languages.
+In this document (or I should say my "article"), I will show you how to wrap and interpret the programming languages into R and how they can be used in computing, and then evaluate them into R. And also, I will share you my experiences of using these languages.
 
-Note that not all the programming languages are listed and used in this documents. The programming languages listed and used in this document are all the programming languages I know where you can write a code within them, as well as to integrate, and call them into R.
+Note that not all programming languages are listed and used in this "article". For example: SQL, I mean for me, who would have thought to use SQL in computing? Some people thought SQL is considered as programming language but for me it's not. 
 
-This document is written in Quarto Website.
+The programming languages listed and used in this "article" are all the programming languages I know where you can write a code within them, as well as to integrate its API, and call them into R.
+
+By the way, this "article" is written in Quarto Website.
 
 *(Still under construction)*
-
-
