@@ -282,7 +282,11 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>Surely that C++ code is only code that can make R code faster. Among the lower languages (C, C++, FORTRAN, Rust), C++, with Rcpp, is the easiest language to compile, but you will be bothered to need to write a boilerplate C++ code in order to work.</li>
 <li>C/FORTRAN code makes the solution the more boilerplate. In fact, what you saw in C and FORTRAN codes are called “<em>subroutines</em>”. My experience is that for C, you need to use pointers or S expressions (SEXP) in order to be callable.</li>
-<li>Use vectorized operations or parallel computing to make the code more faster.</li>
+<li>Use vectorized operations or parallel computing to if you want to make the code of your tasks more faster.
+<ul>
+<li>You can use the base functions in R since their source code is actually written in C/FORTRAN.</li>
+<li>NumPy is the best library in Python for vectorized operations.</li>
+</ul></li>
 </ul>
 
 
