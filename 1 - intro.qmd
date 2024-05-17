@@ -1,6 +1,6 @@
 ## 1.1 Languages
 
-As I said in the introduction, these are only the list where you can integrate into R.
+As I said in the introduction, these are the only programming languages listed where you can wrap and integrate into R.
 
 Here are the list of languages will be used in this document:
 
