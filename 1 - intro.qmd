@@ -41,7 +41,6 @@ Here are the list of languages will be used in this document:
         -   A year.
         -   With `Rcpp`, it became easy for me to learn this language but C++ is still hard for me.
         -   I am still rusty to write a code from this language at all.
-
 3.  Julia
     -   Julia shares similarities with C in that it's a compiled language, effectively addressing the "2 language problem" by eliminating the need for separate languages like C, C++, or FORTRAN APIs.
     -   Julia is a JIT compiled and it is able to be both fast and easy to read.
@@ -49,7 +48,6 @@ Here are the list of languages will be used in this document:
     -   Personal Experience:
         -   a year.
         -   Great language but bothered to learn unless until I master R, Python, and C++.
-
 4.  Rust
     -   Rust, akin to C/C++, prioritizes memory safety.
 
@@ -62,7 +60,6 @@ Here are the list of languages will be used in this document:
         -   I need to master R, Python, and C++ first, and then I won't bother myself learn this language.
 
         -   Installation is such a pain. If you ignore it, using Rust is such an amazing experience.
-
 5.  FORTRAN
     -   Despite its age, FORTRAN remains indispensable in the realm of computing, boasting speed comparable to C/C++.
 
@@ -76,7 +73,7 @@ Here are the list of languages will be used in this document:
         gfortran -shared -o bar.so bar.f95
         ```
 
-    -  Just as C, this is more easier:
+    -   Just as C, this is more easier:
 
         ``` bash
         R CMD SHLIB bar.f95
@@ -116,8 +113,10 @@ Here are the list of languages will be used in this document:
 
 They are all high level languages (or I should say some of them are close to high level languages) and share similarities. To be real, not all the programming languages listed here is what I can write by my own, they are FORTRAN, Rust, and C. Moreover, I only used those languages that can be both used in computing and listed in `knitr`. Also, you can wrap the functions from other languages and this is what I do so that it would be easy for me to benchmark them with `bench::time`.
 
-Remarks for these languages: 
-        -   Most of R (base, stats) functions are written in C and FORTRAN (example: The linear model function `lm()`). 
-        -   C++ came out later and used in some R packages (example: `ranger`).
+Remarks for these languages:
+
+-   Most of R (base, stats) functions are written in C and FORTRAN (example: The linear model function `lm()`).
+
+-   C++ came out later and used in some R packages (example: `ranger`).
 
 The snippet were explained by comment blocks (#) in the code blocks.
