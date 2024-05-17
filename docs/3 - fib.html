@@ -345,8 +345,8 @@ window.Quarto = {
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>gcc  -I"D:/R GUI/R-4.3.3/R-4.3.3/include" -DNDEBUG     -I"C:/rtools43/x86_64-w64-mingw32.static.posix/include"     -O2 -Wall  -mfpmath=sse -msse2 -mstackrealign  -c ce4c68875a7e.c -o ce4c68875a7e.o
-gcc -shared -s -static-libgcc -o ce4c68875a7e.dll tmp.def ce4c68875a7e.o -LC:/rtools43/x86_64-w64-mingw32.static.posix/lib/x64 -LC:/rtools43/x86_64-w64-mingw32.static.posix/lib -LD:/R GUI/R-4.3.3/R-4.3.3/bin/x64 -lR</code></pre>
+<pre><code>gcc  -I"D:/R GUI/R-4.3.3/R-4.3.3/include" -DNDEBUG     -I"C:/rtools43/x86_64-w64-mingw32.static.posix/include"     -O2 -Wall  -mfpmath=sse -msse2 -mstackrealign  -c c323c43332109.c -o c323c43332109.o
+gcc -shared -s -static-libgcc -o c323c43332109.dll tmp.def c323c43332109.o -LC:/rtools43/x86_64-w64-mingw32.static.posix/lib/x64 -LC:/rtools43/x86_64-w64-mingw32.static.posix/lib -LD:/R GUI/R-4.3.3/R-4.3.3/bin/x64 -lR</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -414,34 +414,20 @@ gcc -shared -s -static-libgcc -o ce4c68875a7e.dll tmp.def ce4c68875a7e.o -LC:/rt
 <div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode rust code-with-copy"><code class="sourceCode rust"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">extendr_api::prelude::</span><span class="op">*;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="pp">std::collections::</span>HashMap<span class="op">;</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> fibonacci(n<span class="op">:</span> <span class="dt">i32</span><span class="op">,</span> memo<span class="op">:</span> <span class="op">&amp;</span><span class="kw">mut</span> HashMap<span class="op">&lt;</span><span class="dt">i32</span><span class="op">,</span> <span class="dt">i32</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="dt">i32</span> <span class="op">{</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">let</span> <span class="cn">Some</span>(<span class="op">&amp;</span>result) <span class="op">=</span> memo<span class="op">.</span>get(<span class="op">&amp;</span>n) <span class="op">{</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> result<span class="op">;</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> result <span class="op">=</span> <span class="cf">if</span> n <span class="op">&lt;=</span> <span class="dv">1</span> <span class="op">{</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        n</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        fibonacci(n <span class="op">-</span> <span class="dv">1</span><span class="op">,</span> memo) <span class="op">+</span> fibonacci(n <span class="op">-</span> <span class="dv">2</span><span class="op">,</span> memo)</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">};</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    memo<span class="op">.</span>insert(n<span class="op">,</span> result)<span class="op">;</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    result</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>extendr<span class="at">]</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> fib_rs(n<span class="op">:</span> <span class="dt">i32</span>) <span class="op">-&gt;</span> <span class="dt">Vec</span><span class="op">&lt;</span><span class="dt">i32</span><span class="op">&gt;</span> <span class="op">{</span></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="kw">mut</span> sequence <span class="op">=</span> <span class="pp">vec!</span>[]<span class="op">;</span></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="kw">mut</span> memo <span class="op">=</span> <span class="pp">HashMap::</span>new()<span class="op">;</span></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="dv">0</span><span class="op">..</span>n <span class="op">+</span> <span class="dv">1</span> <span class="op">{</span></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>        sequence<span class="op">.</span>push(fibonacci(i<span class="op">,</span> <span class="op">&amp;</span><span class="kw">mut</span> memo))<span class="op">;</span></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    sequence</span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="at">#[</span>extendr<span class="at">]</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> fib_rs(n<span class="op">:</span> <span class="dt">i32</span>) <span class="op">-&gt;</span> <span class="dt">Vec</span><span class="op">&lt;</span><span class="dt">i32</span><span class="op">&gt;</span> <span class="op">{</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> <span class="kw">mut</span> fib_sequence <span class="op">=</span> <span class="pp">vec!</span>[<span class="dv">0</span><span class="op">;</span> (n <span class="op">+</span> <span class="dv">1</span>) <span class="kw">as</span> <span class="dt">usize</span>]<span class="op">;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">{</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        fib_sequence[<span class="dv">1</span>] <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="dv">2</span><span class="op">..=</span>n <span class="kw">as</span> <span class="dt">usize</span> <span class="op">{</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>            fib_sequence[i] <span class="op">=</span> fib_sequence[i <span class="op">-</span> <span class="dv">1</span>] <span class="op">+</span> fib_sequence[i <span class="op">-</span> <span class="dv">2</span>]<span class="op">;</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    fib_sequence</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fib_rs</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -466,8 +452,8 @@ gcc -shared -s -static-libgcc -o ce4c68875a7e.dll tmp.def ce4c68875a7e.o -LC:/rt
 
 end subroutine fib_f</code></pre>
 <div class="cell-output cell-output-stdout">
-<pre><code>gfortran      -O2  -mfpmath=sse -msse2 -mstackrealign  -c  f95e4c24e944ab.f95 -o f95e4c24e944ab.o
-gcc -shared -s -static-libgcc -o f95e4c24e944ab.dll tmp.def f95e4c24e944ab.o -LC:/rtools43/x86_64-w64-mingw32.static.posix/lib/x64 -LC:/rtools43/x86_64-w64-mingw32.static.posix/lib -lgfortran -lm -lquadmath -LD:/R GUI/R-4.3.3/R-4.3.3/bin/x64 -lR</code></pre>
+<pre><code>gfortran      -O2  -mfpmath=sse -msse2 -mstackrealign  -c  f95323c5f28535e.f95 -o f95323c5f28535e.o
+gcc -shared -s -static-libgcc -o f95323c5f28535e.dll tmp.def f95323c5f28535e.o -LC:/rtools43/x86_64-w64-mingw32.static.posix/lib/x64 -LC:/rtools43/x86_64-w64-mingw32.static.posix/lib -lgfortran -lm -lquadmath -LD:/R GUI/R-4.3.3/R-4.3.3/bin/x64 -lR</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -536,13 +522,13 @@ gcc -shared -s -static-libgcc -o f95e4c24e944ab.dll tmp.def f95e4c24e944ab.o -LC
 <pre><code># A tibble: 7 × 6
   expression      min   median `itr/sec` mem_alloc `gc/sec`
   &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
-1 C             2.6µs    2.8µs   311527.   19.23KB     0   
-2 Cpp           1.6µs    1.8µs   279122.    7.88KB    27.9 
-3 Julia         9.9µs   10.5µs    78728.    5.94KB     0   
-4 Rust         67.6µs   68.9µs    13826.    5.02KB     0   
-5 FORTRAN       2.8µs    3.2µs   226452.   17.73KB     0   
-6 R             7.3µs    8.2µs    89025.      592B     8.90
-7 Python       52.2µs   55.2µs    14265.     5.2KB     4.15</code></pre>
+1 C             2.6µs    2.9µs   280567.   19.23KB     0   
+2 Cpp           1.5µs    1.8µs   292772.    7.88KB    29.3 
+3 Julia         9.9µs   10.5µs    73230.    5.94KB     0   
+4 Rust            7µs    7.3µs   115612.    5.02KB     0   
+5 FORTRAN       2.8µs    3.2µs   252404.   17.73KB     0   
+6 R             7.4µs    8.4µs   100224.      592B    10.0 
+7 Python       52.3µs   55.1µs    15480.     5.2KB     4.15</code></pre>
 </div>
 </div>
 

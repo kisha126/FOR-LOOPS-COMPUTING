@@ -88,35 +88,20 @@ fib_jl(10L)
 
 ```{extendrsrc fib-rs}
 use extendr_api::prelude::*;
-use std::collections::HashMap;
-
-fn fibonacci(n: i32, memo: &mut HashMap<i32, i32>) -> i32 {
-    if let Some(&result) = memo.get(&n) {
-        return result;
-    }
-
-    let result = if n <= 1 {
-        n
-    } else {
-        fibonacci(n - 1, memo) + fibonacci(n - 2, memo)
-    };
-
-    memo.insert(n, result);
-    result
-}
 
 #[extendr]
 fn fib_rs(n: i32) -> Vec<i32> {
-    let mut sequence = vec![];
-    let mut memo = HashMap::new();
-
-    for i in 0..n + 1 {
-        sequence.push(fibonacci(i, &mut memo));
+    let mut fib_sequence = vec![0; (n + 1) as usize];
+    
+    if n > 0 {
+        fib_sequence[1] = 1;
+        for i in 2..=n as usize {
+            fib_sequence[i] = fib_sequence[i - 1] + fib_sequence[i - 2];
+        }
     }
-
-    sequence
+    
+    fib_sequence
 }
-
 ```
 
 ```{r}
